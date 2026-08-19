@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citador técnico — ABNT NBR 10520:2023</title>
+<style>
+:root{
+  --papel:#EDEFEC;
+  --papel-alto:#F9FAF8;
+  --folha:#FFFFFF;
+  --tinta:#182231;
+  --tinta-2:#4C5967;
+  --tinta-3:#7A8794;
+  --cobalto:#25467E;
+  --cobalto-claro:#E4EAF4;
+  --vinho:#7E1F3D;
+  --marca:#F4E5A8;
+  --linha:#D2D8D2;
+  --linha-forte:#B6BEB6;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --ui:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"Cascadia Mono","Consolas","DejaVu Sans Mono",monospace;
+  --r:3px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--papel);
+  color:var(--tinta);
+  font-family:var(--ui);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+/* ---------- cabeçalho ---------- */
+.cabecalho{
+  background:var(--cobalto);
+  color:#fff;
+  padding:22px 28px 18px;
+  border-bottom:3px solid var(--tinta);
+}
+.cabecalho .faixa{max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:#B9C9E6;display:block;margin-bottom:6px;
+}
+.cabecalho h1{font-family:var(--serif);font-weight:600;font-size:29px;margin:0;letter-spacing:.01em}
+.cabecalho p{margin:4px 0 0;color:#CBD8EC;font-size:13.5px;max-width:56ch}
+.selo{
+  font-family:var(--mono);font-size:11px;line-height:1.6;color:#B9C9E6;
+  border-left:2px solid #4C6DA8;padding-left:12px;
+}
+/* ---------- abas ---------- */
+.abas{background:var(--papel-alto);border-bottom:1px solid var(--linha);position:sticky;top:0;z-index:20}
+.abas .faixa{max-width:1320px;margin:0 auto;display:flex;gap:2px;padding:0 22px;overflow-x:auto}
+.aba{
+  appearance:none;background:none;border:0;border-bottom:3px solid transparent;
+  font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--tinta-2);padding:13px 14px;cursor:pointer;white-space:nowrap;
+}
+.aba:hover{color:var(--cobalto)}
+.aba[aria-selected="true"]{color:var(--cobalto);border-bottom-color:var(--cobalto);font-weight:600}
+.aba:focus-visible{outline:2px solid var(--vinho);outline-offset:-2px}
+/* ---------- estrutura ---------- */
+main{max-width:1320px;margin:0 auto;padding:24px 22px 80px}
+.duas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:980px){.duas{grid-template-columns:1fr}}
+.bloco{background:var(--papel-alto);border:1px solid var(--linha);border-radius:var(--r);margin-bottom:18px}
+.bloco>h2{
+  margin:0;padding:11px 16px;border-bottom:1px solid var(--linha);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--tinta-2);font-weight:600;display:flex;gap:10px;align-items:baseline;justify-content:space-between;
+}
+.bloco>h2 .clausula{color:var(--cobalto);letter-spacing:.06em}
+.corpo{padding:16px}
+.grade{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.campo{display:flex;flex-direction:column;gap:4px;grid-column:span 12}
+.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}.c8{grid-column:span 8}.c2{grid-column:span 2}
+@media (max-width:620px){.c6,.c4,.c3,.c8,.c2{grid-column:span 12}}
+label,.rot{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta-2);font-weight:600}
+input[type=text],input[type=date],input[type=number],select,textarea{
+  font-family:var(--ui);font-size:14px;color:var(--tinta);
+  background:var(--folha);border:1px solid var(--linha-forte);border-radius:var(--r);
+  padding:7px 9px;width:100%;
+}
+textarea{font-family:var(--serif);font-size:15px;line-height:1.55;resize:vertical;min-height:84px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--cobalto);outline-offset:-1px;border-color:var(--cobalto)}
+.dica{font-size:12px;color:var(--tinta-3);line-height:1.4}
+.linha-botoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+button.acao{
+  font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;
+  background:var(--folha);border:1px solid var(--linha-forte);color:var(--tinta);
+  padding:7px 12px;border-radius:var(--r);
+}
+button.acao:hover{border-color:var(--cobalto);color:var(--cobalto)}
+button.acao.primaria{background:var(--cobalto);border-color:var(--cobalto);color:#fff}
+button.acao.primaria:hover{background:#1C3A69;color:#fff}
+button.acao.perigo:hover{border-color:var(--vinho);color:var(--vinho)}
+button.acao:focus-visible{outline:2px solid var(--vinho);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  border:1px solid var(--linha-forte);background:var(--folha);border-radius:20px;
+  padding:5px 11px;font-size:12.5px;color:var(--tinta-2);
+}
+.chip input{accent-color:var(--cobalto);margin:0}
+.chip:has(input:checked){border-color:var(--cobalto);background:var(--cobalto-claro);color:var(--cobalto);font-weight:600}
+.autor-linha{display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:end;margin-bottom:8px}
+@media (max-width:620px){.autor-linha{grid-template-columns:1fr 1fr;}}
+.mini{font-size:12px;padding:6px 9px}
+/* ---------- prancha (pré-visualização) ---------- */
+.prancha{position:sticky;top:60px}
+@media (max-width:980px){.prancha{position:static}}
+.folha{
+  background:var(--folha);border:1px solid var(--linha);border-radius:var(--r);
+  box-shadow:0 1px 0 rgba(24,34,49,.05),0 8px 24px -18px rgba(24,34,49,.5);
+  padding:26px 26px 26px 40px;position:relative;
+}
+.folha::before{content:"";position:absolute;left:22px;top:0;bottom:0;width:1px;background:var(--cobalto);opacity:.25}
+.rotulo-saida{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--tinta-3);margin:0 0 8px;display:flex;justify-content:space-between;align-items:center;gap:10px;
+}
+.saida{font-family:var(--serif);font-size:15.5px;line-height:1.62;color:var(--tinta);text-align:justify}
+.saida .vazio{color:var(--tinta-3);font-style:italic}
+.saida .recuo{margin-left:4cm;font-size:13.5px;line-height:1.28;text-align:justify}
+@media (max-width:620px){.saida .recuo{margin-left:1.6cm}}
+.saida mark{background:var(--marca);padding:0 1px}
+.divisor{height:1px;background:var(--linha);margin:20px 0}
+.ref-saida{font-family:var(--serif);font-size:14.5px;line-height:1.45;text-align:left}
+.nota-saida{font-family:var(--serif);font-size:13.5px;line-height:1.35}
+.nota-saida sup{font-size:10px}
+/* ---------- fundamento ---------- */
+.fundamento{margin-top:18px;border-top:2px solid var(--tinta);padding-top:12px}
+.fundamento h3{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--tinta-2);margin:0 0 9px;font-weight:600;
+}
+.fund-item{display:grid;grid-template-columns:64px 1fr;gap:10px;font-size:12.5px;color:var(--tinta-2);padding:3px 0}
+.fund-item b{font-family:var(--mono);font-size:12px;color:var(--cobalto);font-weight:600}
+.avisos{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.aviso{
+  border-left:3px solid var(--vinho);background:#FBF2F5;padding:8px 11px;
+  font-size:12.5px;color:#5E1730;border-radius:0 var(--r) var(--r) 0;
+}
+.aviso b{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em}
+.ok{border-left-color:var(--cobalto);background:var(--cobalto-claro);color:#1B3560}
+/* ---------- lista ---------- */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{
+  text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--tinta-2);border-bottom:2px solid var(--tinta);padding:8px 10px;font-weight:600;
+}
+td{border-bottom:1px solid var(--linha);padding:10px;vertical-align:top}
+td.ref{font-family:var(--serif);font-size:14.5px;line-height:1.42}
+td.num{font-family:var(--mono);font-size:12px;color:var(--cobalto);white-space:nowrap;width:1%}
+td.ferramentas{white-space:nowrap;width:1%}
+.vazio-lista{padding:34px 16px;text-align:center;color:var(--tinta-3);font-size:13.5px}
+/* ---------- guia ---------- */
+.guia{columns:2;column-gap:34px}
+@media (max-width:900px){.guia{columns:1}}
+.guia section{break-inside:avoid;margin:0 0 20px}
+.guia h3{
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--cobalto);margin:0 0 6px;
+}
+.guia p{margin:0 0 7px;font-size:13.5px;color:var(--tinta-2);line-height:1.5}
+.guia code{font-family:var(--serif);background:var(--papel);padding:1px 4px;border-radius:2px;font-size:13.5px;color:var(--tinta)}
+.oculto{display:none !important}
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(12px);
+  background:var(--tinta);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;
+  opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:60;
+}
+.toast.visivel{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="cabecalho">
+  <div class="faixa">
+    <div class="marca">
+      <span class="eyebrow">Citações · ABNT NBR 10520:2023 &nbsp;|&nbsp; Referências · ABNT NBR 6023:2018</span>
+      <h1>Citador técnico</h1>
+      <p>Monte a chamada no texto e a entrada da lista de referências do memorial descritivo, com o fundamento normativo de cada escolha à vista.</p>
+    </div>
+    <div class="selo">uso offline · nada sai desta página<br>copiar preserva negrito, itálico e recuo</div>
+  </div>
+</header>
+
+<nav class="abas"><div class="faixa" role="tablist">
+  <button class="aba" role="tab" aria-selected="true" data-painel="p-citacao">Fonte e citação</button>
+  <button class="aba" role="tab" aria-selected="false" data-painel="p-notas">Notas de rodapé</button>
+  <button class="aba" role="tab" aria-selected="false" data-painel="p-lista">Lista de referências</button>
+  <button class="aba" role="tab" aria-selected="false" data-painel="p-guia">Regras aplicadas</button>
+</div></nav>
+
+<main>
+
+<!-- =============== PAINEL 1 =============== -->
+<div id="p-citacao" class="painel duas">
+  <div>
+    <section class="bloco">
+      <h2>Fonte citada <span class="clausula">6.1.1</span></h2>
+      <div class="corpo">
+        <div class="grade">
+          <div class="campo c6">
+            <label for="tipoObra">Tipo de documento</label>
+            <select id="tipoObra">
+              <option value="livro">Livro / obra no todo</option>
+              <option value="capitulo">Capítulo ou parte de livro</option>
+              <option value="periodico">Artigo de periódico</option>
+              <option value="norma">Norma técnica (ABNT, ISO, ASTM)</option>
+              <option value="relatorio">Relatório técnico / laudo</option>
+              <option value="catalogo">Catálogo, manual ou boletim de fabricante</option>
+              <option value="legislacao">Legislação, decreto ou portaria</option>
+              <option value="tese">Tese, dissertação ou TCC</option>
+              <option value="evento">Trabalho em anais de evento</option>
+              <option value="site">Página ou documento na internet</option>
+              <option value="naoPublicada">Fonte não publicada (palestra, entrevista, e-mail)</option>
+              <option value="elaboracao">Documento em fase de elaboração</option>
+            </select>
+          </div>
+          <div class="campo c6">
+            <label for="tipoAutoria">Responsabilidade</label>
+            <select id="tipoAutoria">
+              <option value="fisica">Pessoa física — sobrenome do autor (6.1.1.1)</option>
+              <option value="juridica">Pessoa jurídica — instituição ou empresa (6.1.1.2)</option>
+              <option value="governamental">Órgão da administração direta (6.1.1.3)</option>
+              <option value="sem">Sem autoria — entrada pelo título (6.1.1.4)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="bloco-fisica" style="margin-top:14px">
+          <span class="rot">Autores</span>
+          <div id="autores" style="margin-top:8px"></div>
+          <div class="linha-botoes">
+            <button class="acao mini" type="button" id="add-autor">+ Adicionar autor</button>
+            <label class="chip"><input type="checkbox" id="usarEtAl"> Usar <i>et&nbsp;al.</i> a partir de 4 autores (6.1.2)</label>
+          </div>
+        </div>
+
+        <div id="bloco-juridica" class="grade oculto" style="margin-top:14px">
+          <div class="campo c8"><label for="entidade">Nome da instituição</label>
+            <input type="text" id="entidade" placeholder="Associação Brasileira de Normas Técnicas"></div>
+          <div class="campo c4"><label for="sigla">Sigla</label>
+            <input type="text" id="sigla" placeholder="ABNT"></div>
+          <div class="campo"><label class="chip"><input type="checkbox" id="usarSigla"> Chamar pela sigla no texto — siglas sempre em maiúsculas</label></div>
+        </div>
+
+        <div id="bloco-gov" class="grade oculto" style="margin-top:14px">
+          <div class="campo c4"><label for="jurisdicao">Jurisdição</label>
+            <input type="text" id="jurisdicao" placeholder="Brasil"></div>
+          <div class="campo c8"><label for="orgao">Órgão subordinado (só na referência)</label>
+            <input type="text" id="orgao" placeholder="Ministério das Cidades"></div>
+        </div>
+
+        <div id="bloco-sem" class="grade oculto" style="margin-top:14px">
+          <div class="campo"><label class="chip"><input type="checkbox" id="monossilabo"> O título começa por monossílabo — incluir a palavra seguinte (6.1.1.4-d)</label>
+            <p class="dica">Títulos iniciados por artigo já são tratados automaticamente. A entrada usa a primeira palavra seguida de [...].</p></div>
+        </div>
+
+        <div id="campos-obra" class="grade" style="margin-top:16px"></div>
+      </div>
+    </section>
+
+    <section class="bloco">
+      <h2>Citação <span class="clausula">7.1 a 7.3</span></h2>
+      <div class="corpo">
+        <div class="grade">
+          <div class="campo c6"><label for="sistema">Sistema de chamada (6)</label>
+            <select id="sistema">
+              <option value="autordata">Autor-data</option>
+              <option value="numerico">Numérico</option>
+            </select>
+          </div>
+          <div class="campo c6"><label for="forma">Forma da citação</label>
+            <select id="forma">
+              <option value="diretaCurta">Direta, até três linhas (7.1)</option>
+              <option value="diretaLonga">Direta, mais de três linhas (7.1.1)</option>
+              <option value="indireta">Indireta / paráfrase (7.2)</option>
+              <option value="apud">Citação de citação — apud (7.3)</option>
+            </select>
+          </div>
+          <div class="campo c6" id="campo-posicao"><label for="posicao">Posição da chamada</label>
+            <select id="posicao">
+              <option value="parens">Entre parênteses, ao fim do trecho (6.1.3)</option>
+              <option value="sentenca">Incluída na sentença (6.1.4)</option>
+            </select>
+          </div>
+          <div class="campo c6" id="campo-numero"><label for="numFonte">Número da fonte no texto (6.2.1)</label>
+            <input type="text" id="numFonte" placeholder="7" inputmode="numeric"></div>
+          <div class="campo c6" id="campo-conector"><label for="conector">Conector antes da transcrição</label>
+            <input type="text" id="conector" placeholder="afirma que"></div>
+          <div class="campo c6" id="campo-numFormato"><label for="numFormato">Apresentação do número</label>
+            <select id="numFormato">
+              <option value="parens">Entre parênteses, alinhado ao texto</option>
+              <option value="expoente">Em expoente</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo" style="margin-top:12px">
+          <label for="trecho">Trecho citado ou parafraseado</label>
+          <textarea id="trecho" placeholder="Cole aqui o trecho. Não digite as aspas: elas são inseridas conforme a forma escolhida."></textarea>
+          <div class="linha-botoes">
+            <button class="acao mini" type="button" data-insere="[...]">Inserir supressão [...]</button>
+            <button class="acao mini" type="button" data-insere="[ ]">Inserir interpolação [ ]</button>
+            <button class="acao mini" type="button" id="btn-grifar">Grifar seleção</button>
+          </div>
+          <p class="dica">Supressões, interpolações e destaques seguem 5.2. O ponto final encerra a frase, nunca a citação (7.1.2).</p>
+        </div>
+
+        <div id="bloco-apud" class="grade oculto" style="margin-top:12px">
+          <div class="campo c4"><label for="apudAutor">Autoria da fonte original</label><input type="text" id="apudAutor" placeholder="Cunha"></div>
+          <div class="campo c4"><label for="apudAno">Ano da fonte original</label><input type="text" id="apudAno" placeholder="1998"></div>
+          <div class="campo c4"><label for="apudPagina">Página na fonte original</label><input type="text" id="apudPagina" placeholder="43"></div>
+          <p class="dica" style="grid-column:span 12">Na lista de referências entra somente a fonte efetivamente consultada (7.3).</p>
+        </div>
+
+        <div style="margin-top:14px">
+          <span class="rot">Localização no documento (7.1.3 e 7.1.4)</span>
+          <div id="localizacoes" style="margin-top:8px"></div>
+          <div class="linha-botoes">
+            <button class="acao mini" type="button" id="add-loc">+ Adicionar localização</button>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <span class="rot">Complementos da chamada</span>
+          <div class="chips" style="margin-top:8px">
+            <label class="chip"><input type="checkbox" id="grifoNosso"> grifo nosso (7.1.5)</label>
+            <label class="chip"><input type="checkbox" id="grifoProprio"> grifo próprio</label>
+            <label class="chip"><input type="checkbox" id="traducaoNossa"> tradução nossa (7.1.6)</label>
+            <label class="chip"><input type="checkbox" id="traducaoPropria"> tradução própria</label>
+            <label class="chip"><input type="checkbox" id="naoPaginado"> fonte não paginada</label>
+          </div>
+        </div>
+
+        <div class="grade" style="margin-top:14px">
+          <div class="campo c4"><label for="letraAno">Letra de desambiguação (6.1.6)</label>
+            <select id="letraAno"><option value="">nenhuma</option><option>a</option><option>b</option><option>c</option><option>d</option><option>e</option></select></div>
+          <div class="campo c8"><label for="desambiguacao">Homônimos no mesmo ano (6.1.5)</label>
+            <select id="desambiguacao">
+              <option value="">só o sobrenome</option>
+              <option value="inicial">acrescentar inicial do prenome</option>
+              <option value="extenso">acrescentar prenome por extenso</option>
+            </select></div>
+        </div>
+
+        <div class="linha-botoes" style="margin-top:16px">
+          <button class="acao primaria" type="button" id="salvar-fonte">Adicionar à lista de referências</button>
+          <button class="acao" type="button" id="limpar">Limpar formulário</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="prancha">
+    <div class="folha">
+      <p class="rotulo-saida">No texto <button class="acao mini" type="button" data-copiar="saida-texto">Copiar</button></p>
+      <div class="saida" id="saida-texto"><span class="vazio">Preencha a fonte e o trecho para ver a citação montada.</span></div>
+      <div class="divisor"></div>
+      <p class="rotulo-saida">Na lista de referências <button class="acao mini" type="button" data-copiar="saida-ref">Copiar</button></p>
+      <div class="ref-saida" id="saida-ref"><span class="vazio">A referência aparece aqui.</span></div>
+      <div class="fundamento">
+        <h3>Fundamento normativo</h3>
+        <div id="fundamento"></div>
+        <div class="avisos" id="avisos"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============== PAINEL 2 =============== -->
+<div id="p-notas" class="painel duas oculto">
+  <div>
+    <section class="bloco">
+      <h2>Nota de rodapé <span class="clausula">8.1 e 8.2</span></h2>
+      <div class="corpo">
+        <div class="grade">
+          <div class="campo c6"><label for="notaTipo">Tipo de nota</label>
+            <select id="notaTipo">
+              <option value="primeira">Primeira citação da fonte — referência completa (8.1.1)</option>
+              <option value="ref">Remissão ao número da nota anterior — ref. (8.1.2.1)</option>
+              <option value="idem">Idem — mesma autoria, outro documento (Id.)</option>
+              <option value="ibidem">Ibidem — mesma obra, imediatamente anterior (Ibid.)</option>
+              <option value="opcit">Opus citatum — mesma obra, não subsequente (op. cit.)</option>
+              <option value="loccit">Loco citato — mesma obra e mesmo local (loc. cit.)</option>
+              <option value="passim">Passim — informação em vários trechos</option>
+              <option value="cf">Conferre — sugestão de confronto (Cf.)</option>
+              <option value="etseq">Sequentia — página citada e seguintes (et seq.)</option>
+              <option value="apudNota">Apud — citação de citação em nota (8.1.3)</option>
+              <option value="explicativa">Nota explicativa (8.2)</option>
+            </select>
+          </div>
+          <div class="campo c3"><label for="notaNumero">Número da nota</label><input type="text" id="notaNumero" placeholder="12" inputmode="numeric"></div>
+          <div class="campo c3"><label for="notaRefAnterior">Nº da nota anterior</label><input type="text" id="notaRefAnterior" placeholder="8" inputmode="numeric"></div>
+          <div class="campo c6"><label for="notaAutor">Autoria (sobrenome ou entidade)</label><input type="text" id="notaAutor" placeholder="Minayo"></div>
+          <div class="campo c3"><label for="notaAno">Ano</label><input type="text" id="notaAno" placeholder="2021"></div>
+          <div class="campo c3"><label for="notaPagina">Página ou localização</label><input type="text" id="notaPagina" placeholder="p. 54"></div>
+          <div class="campo c6"><label for="notaApudAutor">Autoria da fonte consultada (apud)</label><input type="text" id="notaApudAutor" placeholder="Sage"></div>
+          <div class="campo c6"><label for="notaApudAno">Ano da fonte consultada</label><input type="text" id="notaApudAno" placeholder="1992"></div>
+          <div class="campo"><label for="notaTexto">Texto da nota explicativa ou referência completa</label>
+            <textarea id="notaTexto" placeholder="Digite o comentário, o esclarecimento ou cole a referência completa."></textarea></div>
+        </div>
+        <div class="linha-botoes">
+          <button class="acao" type="button" id="usar-fonte-nota">Puxar dados da fonte aberta</button>
+        </div>
+        <p class="dica" style="margin-top:10px">A numeração das notas é única e consecutiva por capítulo ou parte, e não recomeça a cada página (8.1). Abreviaturas latinas em itálico só valem na mesma página da citação a que se referem.</p>
+      </div>
+    </section>
+  </div>
+  <div class="prancha">
+    <div class="folha">
+      <p class="rotulo-saida">Rodapé <button class="acao mini" type="button" data-copiar="saida-nota">Copiar</button></p>
+      <div class="nota-saida" id="saida-nota"><span class="vazio">Escolha o tipo de nota para ver o resultado.</span></div>
+      <div class="fundamento">
+        <h3>Fundamento normativo</h3>
+        <div id="fundamento-nota"></div>
+        <div class="avisos" id="avisos-nota"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============== PAINEL 3 =============== -->
+<div id="p-lista" class="painel oculto">
+  <section class="bloco">
+    <h2>Lista de referências <span class="clausula">5.1 · NBR 6023</span></h2>
+    <div class="corpo">
+      <div class="linha-botoes" style="margin-top:0">
+        <button class="acao" type="button" id="ordem-alfabetica">Ordenar alfabeticamente</button>
+        <button class="acao" type="button" id="ordem-entrada">Ordenar pela entrada no texto</button>
+        <button class="acao" type="button" data-copiar="tabela-lista">Copiar lista inteira</button>
+        <button class="acao" type="button" id="exportar-json">Salvar projeto (.json)</button>
+        <button class="acao" type="button" id="importar-json">Abrir projeto (.json)</button>
+        <button class="acao perigo" type="button" id="zerar-lista">Esvaziar lista</button>
+        <input type="file" id="arquivo-json" accept="application/json,.json" class="oculto">
+      </div>
+      <p class="dica" style="margin-top:10px">A lista existe apenas nesta aba aberta. Salve o projeto em .json antes de fechar a página.</p>
+      <div id="avisos-lista" class="avisos"></div>
+      <div id="tabela-lista" style="margin-top:14px"></div>
+    </div>
+  </section>
+</div>
+
+<!-- =============== PAINEL 4 =============== -->
+<div id="p-guia" class="painel oculto">
+  <section class="bloco">
+    <h2>Como o aplicativo aplica a norma</h2>
+    <div class="corpo guia">
+      <section>
+        <h3>Mudança de 2002 para 2023</h3>
+        <p>No corpo do texto a autoria vai em maiúsculas e minúsculas, e não mais em caixa alta: <code>(Cunha, 2019, p. 12)</code>. A caixa alta permanece na lista de referências e nas notas de rodapé.</p>
+      </section>
+      <section>
+        <h3>Um sistema por trabalho</h3>
+        <p>Autor-data ou numérico, escolhido uma vez e mantido do início ao fim (6). O sistema numérico não convive com notas de rodapé (6.2.2): se o memorial tem notas, use autor-data.</p>
+      </section>
+      <section>
+        <h3>Citação direta</h3>
+        <p>Até três linhas, entre aspas duplas, dentro do parágrafo. Acima de três linhas, sai do parágrafo com recuo de 4 cm, corpo menor, entrelinha simples e sem aspas (7.1.1). Aspas simples marcam citação dentro da citação.</p>
+      </section>
+      <section>
+        <h3>Página é obrigatória na citação direta</h3>
+        <p>A página ou o localizador acompanha a data (6.1.3). Documento sem paginação pede outra indicação do lugar: capítulo, artigo, inciso, localizador de e-book ou tempo de vídeo (7.1.4).</p>
+      </section>
+      <section>
+        <h3>Ordem dos complementos</h3>
+        <p>Data, localização, tradução e grifo, nessa sequência, como últimos elementos da chamada: <code>(Souza, 2020, p. 8, tradução nossa, grifo nosso)</code>.</p>
+      </section>
+      <section>
+        <h3>Volume, tomo e seção</h3>
+        <p>Vêm abreviados antes da página (7.1.3). Volume e número de periódico não entram na chamada: ficam só na referência.</p>
+      </section>
+      <section>
+        <h3>Quatro ou mais autores</h3>
+        <p>Pode-se citar o primeiro seguido de <i>et al.</i>, desde que o critério seja o mesmo em todas as citações do documento (6.1.2). A referência traz todos.</p>
+      </section>
+      <section>
+        <h3>Entidades e órgãos</h3>
+        <p>Instituição pelo nome completo ou pela sigla, com sigla em maiúsculas (6.1.1.2). Órgão da administração direta entra pela jurisdição: <code>(Brasil, 2021)</code> (6.1.1.3).</p>
+      </section>
+      <section>
+        <h3>Apud</h3>
+        <p>Autoria e ano da fonte original, a expressão <i>apud</i> em itálico e os dados da fonte consultada. Só a consultada vai para a lista de referências (7.3).</p>
+      </section>
+      <section>
+        <h3>Palestras, entrevistas e e-mails</h3>
+        <p>Fonte não publicada formalmente é indicada no texto ou em nota e não gera entrada na lista de referências (5.3 e 7.1.7). Documento em elaboração é declarado como tal em nota (5.4).</p>
+      </section>
+      <section>
+        <h3>Mesma autoria, mesmo ano</h3>
+        <p>Letras minúsculas coladas à data, na ordem da lista de referências: <code>(ABNT, 2010a)</code> (6.1.6). Sobrenomes iguais em anos iguais pedem a inicial do prenome e, se persistir, o prenome inteiro (6.1.5).</p>
+      </section>
+      <section>
+        <h3>Expressões latinas</h3>
+        <p><i>Id.</i>, <i>Ibid.</i>, <i>op. cit.</i> e <i>loc. cit.</i> só podem ser usadas na mesma página da citação a que se referem. <i>Op. cit.</i> não serve quando duas obras do mesmo autor aparecem na mesma página (8.1.2.2).</p>
+      </section>
+    </div>
+  </section>
+</div>
+
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   Utilidades
+   ============================================================ */
+const $ = (id) => document.getElementById(id);
+const A = (v) => String(v == null ? "" : v).trim();
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const MESES = { "1": "jan.", "2": "fev.", "3": "mar.", "4": "abr.", "5": "maio", "6": "jun.", "7": "jul.", "8": "ago.", "9": "set.", "10": "out.", "11": "nov.", "12": "dez." };
+
+function tituloCaso(s) {
+  s = A(s);
+  if (!s) return "";
+  if (s === s.toUpperCase()) {
+    return s.toLowerCase().replace(/(^|[\s'\-])([\wáéíóúâêôãõçà])/g, (m, a, b) => a + b.toUpperCase());
+  }
+  return s;
+}
+function primeiraMaiuscula(s) {
+  s = A(s);
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+}
+function dataExtenso(iso) {
+  if (!A(iso)) return "";
+  const p = iso.split("-");
+  if (p.length !== 3) return iso;
+  return `${parseInt(p[2], 10)} ${MESES[String(parseInt(p[1], 10))]} ${p[0]}`;
+}
+function juntar(partes) {
+  return partes.filter((p) => A(p)).join(" ").replace(/\s+([,.;:])/g, "$1");
+}
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("visivel");
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove("visivel"), 2200);
+}
+
+/* ============================================================
+   Estado
+   ============================================================ */
+const S = {
+  autores: [{ sobrenome: "", prenome: "", papel: "" }],
+  localizacoes: [{ tipo: "p", valor: "" }],
+  campos: {},
+  lista: [],
+  ordem: "alfabetica",
+};
+
+const ARTIGOS = ["a", "o", "as", "os", "um", "uma", "uns", "umas"];
+
+// campo que carrega o titulo principal de cada tipo de documento
+const CAMPO_TITULO = {
+  livro: "titulo", capitulo: "tituloCapitulo", periodico: "tituloArtigo", norma: "titulo",
+  relatorio: "titulo", catalogo: "titulo", legislacao: "epigrafe", tese: "titulo",
+  evento: "tituloTrabalho", site: "titulo", naoPublicada: "titulo", elaboracao: "titulo",
+};
+function tituloPrincipal() {
+  return A(S.campos[CAMPO_TITULO[$("tipoObra").value] || "titulo"]);
+}
+
+/* ============================================================
+   Esquema de campos por tipo de documento
+   ============================================================ */
+const ESQUEMA = {
+  livro: [
+    ["titulo", "Título", "c8"], ["subtitulo", "Subtítulo", "c4"],
+    ["edicao", "Edição (nº)", "c2"], ["local", "Local", "c4"], ["editora", "Editora", "c4"], ["ano", "Ano", "c2"],
+    ["paginas", "Total de páginas", "c3"], ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  capitulo: [
+    ["tituloCapitulo", "Título do capítulo", "c8"], ["paginaInicial", "Página inicial", "c2"], ["paginaFinal", "Página final", "c2"],
+    ["responsavelLivro", "Responsável pelo livro (ex.: CUNHA, Marcos (org.))", "c6"], ["titulo", "Título do livro", "c6"],
+    ["subtitulo", "Subtítulo do livro", "c6"], ["edicao", "Edição (nº)", "c2"], ["local", "Local", "c4"],
+    ["editora", "Editora", "c4"], ["ano", "Ano", "c2"], ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  periodico: [
+    ["tituloArtigo", "Título do artigo", "c8"], ["subtituloArtigo", "Subtítulo do artigo", "c4"],
+    ["titulo", "Título do periódico", "c6"], ["local", "Local", "c3"], ["volume", "Volume", "c3"],
+    ["numero", "Número/fascículo", "c3"], ["paginaInicial", "Página inicial", "c2"], ["paginaFinal", "Página final", "c2"],
+    ["mes", "Mês (nº)", "c2"], ["ano", "Ano", "c3"], ["doi", "DOI", "c6"], ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  norma: [
+    ["codigo", "Código da norma", "c4"], ["titulo", "Título da norma", "c8"],
+    ["subtitulo", "Complemento do título", "c8"], ["edicao", "Edição (nº)", "c2"], ["ano", "Ano", "c2"],
+    ["local", "Local", "c4"], ["editora", "Editora", "c4"], ["paginas", "Total de páginas", "c2"],
+    ["versao", "Versão corrigida ou emenda", "c6"], ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  relatorio: [
+    ["titulo", "Título do relatório", "c8"], ["subtitulo", "Subtítulo", "c4"],
+    ["numeroRelatorio", "Número do relatório", "c4"], ["local", "Local", "c4"], ["editora", "Instituição responsável", "c4"],
+    ["ano", "Ano", "c2"], ["paginas", "Total de páginas", "c2"], ["nota", "Nota (série, contratante, restrição)", "c8"],
+    ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  catalogo: [
+    ["titulo", "Nome do produto ou sistema", "c6"], ["subtitulo", "Tipo de documento (catálogo técnico, boletim, manual)", "c6"],
+    ["local", "Local", "c4"], ["editora", "Empresa", "c4"], ["ano", "Ano", "c2"], ["paginas", "Total de páginas", "c2"],
+    ["nota", "Nota (revisão, código do documento)", "c6"], ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  legislacao: [
+    ["epigrafe", "Epígrafe (Lei nº 8.078, de 11 de setembro de 1990)", "c8"], ["ano", "Ano", "c2"],
+    ["ementa", "Ementa", "c12"], ["veiculo", "Veículo de publicação", "c4"], ["secao", "Seção", "c2"],
+    ["local", "Local", "c3"], ["pagina", "Página", "c3"], ["dataPub", "Data de publicação", "c4", "date"],
+    ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  tese: [
+    ["titulo", "Título", "c8"], ["subtitulo", "Subtítulo", "c4"], ["ano", "Ano de defesa", "c2"],
+    ["folhas", "Nº de folhas", "c2"], ["grau", "Grau (Tese, Dissertação, TCC)", "c4"], ["area", "Área", "c4"],
+    ["unidade", "Faculdade ou unidade", "c6"], ["instituicao", "Instituição", "c4"], ["local", "Local", "c2"],
+    ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  evento: [
+    ["tituloTrabalho", "Título do trabalho", "c8"], ["nomeEvento", "Nome do evento", "c8"],
+    ["numeroEvento", "Nº do evento", "c2"], ["anoEvento", "Ano do evento", "c2"], ["localEvento", "Local do evento", "c4"],
+    ["tipoPublicacao", "Tipo de publicação (Anais, Resumos)", "c4"], ["local", "Local da publicação", "c3"],
+    ["editora", "Editora", "c3"], ["ano", "Ano", "c2"], ["paginaInicial", "Página inicial", "c2"], ["paginaFinal", "Página final", "c2"],
+    ["url", "URL", "c6"], ["acesso", "Acesso em", "c3", "date"],
+  ],
+  site: [
+    ["titulo", "Título da página ou documento", "c8"], ["subtitulo", "Subtítulo", "c4"],
+    ["local", "Local", "c4"], ["editora", "Responsável pela publicação", "c4"], ["ano", "Ano", "c2"],
+    ["url", "URL", "c8"], ["acesso", "Acesso em", "c4", "date"],
+  ],
+  naoPublicada: [
+    ["titulo", "Descrição da fonte (palestra, entrevista, comunicação)", "c8"], ["local", "Local", "c4"],
+    ["dataPub", "Data", "c4", "date"], ["ano", "Ano", "c2"],
+  ],
+  elaboracao: [
+    ["titulo", "Documento em elaboração", "c8"], ["editora", "Responsável pela futura publicação", "c4"], ["ano", "Ano previsto", "c2"],
+  ],
+};
+
+const TIPOS_LOC = [
+  ["p", "página — p."], ["pp", "intervalo de páginas — p."], ["v", "volume — v."], ["t", "tomo — t."],
+  ["sec", "seção — seç."], ["cap", "capítulo — cap."], ["art", "artigo — art."], ["inc", "inciso — inc."],
+  ["pt", "parte — pt."], ["local", "localizador de e-book — local."], ["slide", "slide"], ["tempo", "tempo de vídeo ou áudio"],
+  ["livre", "outra indicação (digitada como será exibida)"],
+];
+
+/* ============================================================
+   Montagem dos campos dinâmicos
+   ============================================================ */
+function renderCampos() {
+  const tipo = $("tipoObra").value;
+  const cont = $("campos-obra");
+  cont.innerHTML = ESQUEMA[tipo].map(([k, rot, cls, t]) => {
+    const val = esc(S.campos[k] || "");
+    const tipoInput = t === "date" ? "date" : "text";
+    return `<div class="campo ${cls === "c12" ? "" : cls}">
+      <label for="f_${k}">${esc(rot)}</label>
+      <input type="${tipoInput}" id="f_${k}" data-campo="${k}" value="${val}">
+    </div>`;
+  }).join("");
+}
+
+function renderAutores() {
+  $("autores").innerHTML = S.autores.map((a, i) => `
+    <div class="autor-linha">
+      <div class="campo"><label for="a_sob_${i}">Sobrenome</label>
+        <input type="text" id="a_sob_${i}" data-autor="${i}" data-parte="sobrenome" value="${esc(a.sobrenome)}" placeholder="Cunha"></div>
+      <div class="campo"><label for="a_pre_${i}">Prenome</label>
+        <input type="text" id="a_pre_${i}" data-autor="${i}" data-parte="prenome" value="${esc(a.prenome)}" placeholder="Marcos Vinícius"></div>
+      <div class="campo" style="min-width:110px"><label for="a_pap_${i}">Papel</label>
+        <select id="a_pap_${i}" data-autor="${i}" data-parte="papel">
+          <option value="">autor</option><option value="org.">organizador</option>
+          <option value="coord.">coordenador</option><option value="ed.">editor</option><option value="rev. téc.">revisor técnico</option>
+        </select></div>
+      <button class="acao mini perigo" type="button" data-remove-autor="${i}" aria-label="Remover autor ${i + 1}">Remover</button>
+    </div>`).join("");
+  S.autores.forEach((a, i) => { const s = $(`a_pap_${i}`); if (s) s.value = a.papel || ""; });
+}
+
+function renderLocalizacoes() {
+  $("localizacoes").innerHTML = S.localizacoes.map((l, i) => `
+    <div class="autor-linha" style="grid-template-columns:1.4fr 1fr auto">
+      <div class="campo"><label for="l_tipo_${i}">Tipo</label>
+        <select id="l_tipo_${i}" data-loc="${i}" data-parte="tipo">
+          ${TIPOS_LOC.map(([v, r]) => `<option value="${v}">${esc(r)}</option>`).join("")}
+        </select></div>
+      <div class="campo"><label for="l_val_${i}">Indicação</label>
+        <input type="text" id="l_val_${i}" data-loc="${i}" data-parte="valor" value="${esc(l.valor)}" placeholder="12"></div>
+      <button class="acao mini perigo" type="button" data-remove-loc="${i}">Remover</button>
+    </div>`).join("");
+  S.localizacoes.forEach((l, i) => { const s = $(`l_tipo_${i}`); if (s) s.value = l.tipo; });
+}
+
+/* ============================================================
+   Autoria — texto na citação e na referência
+   ============================================================ */
+function autoresValidos() {
+  return S.autores.filter((a) => A(a.sobrenome));
+}
+
+function sobrenomeCit(a) {
+  const modo = $("desambiguacao").value;
+  const sob = tituloCaso(a.sobrenome);
+  if (!modo || !A(a.prenome)) return { sob, extra: "" };
+  const pre = tituloCaso(a.prenome);
+  const extra = modo === "inicial" ? pre.charAt(0).toUpperCase() + "." : pre;
+  return { sob, extra };
+}
+
+function tituloEntradaCit() {
+  const t = tituloPrincipal();
+  if (!t) return "";
+  const palavras = t.split(/\s+/);
+  if (palavras.length === 1) return primeiraMaiuscula(palavras[0].toLowerCase());
+  const primeira = palavras[0].toLowerCase();
+  const usarDuas = ARTIGOS.indexOf(primeira) >= 0 || $("monossilabo").checked;
+  const base = usarDuas ? `${primeira} ${palavras[1].toLowerCase()}` : primeira;
+  return primeiraMaiuscula(base) + " [...]";
+}
+
+function autoriaCitacao(posicao) {
+  const tipo = $("tipoAutoria").value;
+  if (tipo === "juridica") {
+    return $("usarSigla").checked && A($("sigla").value)
+      ? A($("sigla").value).toUpperCase()
+      : tituloCaso($("entidade").value);
+  }
+  if (tipo === "governamental") return tituloCaso($("jurisdicao").value);
+  if (tipo === "sem") return tituloEntradaCit();
+
+  const lista = autoresValidos();
+  if (!lista.length) return "";
+  if (lista.length >= 4 && $("usarEtAl").checked) {
+    const p = sobrenomeCit(lista[0]);
+    return (posicao === "parens" && p.extra ? `${p.sob}, ${p.extra}` : (p.extra ? `${p.extra} ${p.sob}` : p.sob)) + " <i>et al.</i>";
+  }
+  const nomes = lista.map((a) => {
+    const p = sobrenomeCit(a);
+    if (!p.extra) return p.sob;
+    return posicao === "parens" ? `${p.sob}, ${p.extra}` : `${p.extra} ${p.sob}`;
+  });
+  if (nomes.length === 1) return nomes[0];
+  if (posicao === "parens") return nomes.join("; ");
+  return nomes.slice(0, -1).join(", ") + " e " + nomes[nomes.length - 1];
+}
+
+function autoresReferencia() {
+  const tipo = $("tipoAutoria").value;
+  if (tipo === "juridica") {
+    const nome = A($("entidade").value).toUpperCase();
+    const sigla = A($("sigla").value).toUpperCase();
+    return nome || sigla;
+  }
+  if (tipo === "governamental") {
+    const j = A($("jurisdicao").value).toUpperCase();
+    const o = A($("orgao").value);
+    return juntar([j ? j + "." : "", o ? o : ""]).replace(/\.$/, "");
+  }
+  if (tipo === "sem") return "";
+  const lista = autoresValidos();
+  if (!lista.length) return "";
+  const fmt = (a) => {
+    const base = `${A(a.sobrenome).toUpperCase()}${A(a.prenome) ? ", " + tituloCaso(a.prenome) : ""}`;
+    return a.papel ? `${base} (${a.papel})` : base;
+  };
+  if (lista.length >= 4 && $("usarEtAl").checked) return fmt(lista[0]) + " <i>et al.</i>";
+  return lista.map(fmt).join("; ");
+}
+
+function tituloEntradaRef() {
+  const t = tituloPrincipal();
+  if (!t) return "";
+  const palavras = t.split(/\s+/);
+  if (palavras.length === 1) return palavras[0].toUpperCase();
+  const usarDuas = ARTIGOS.indexOf(palavras[0].toLowerCase()) >= 0 || $("monossilabo").checked;
+  const n = usarDuas ? 2 : 1;
+  return palavras.slice(0, n).join(" ").toUpperCase() + " " + palavras.slice(n).join(" ");
+}
+
+/* ============================================================
+   Referência (NBR 6023)
+   ============================================================ */
+function tituloDestaque(campoTitulo) {
+  const t = A(S.campos[campoTitulo || "titulo"]);
+  if (!t) return "";
+  const sub = A(S.campos.subtitulo);
+  if ($("tipoAutoria").value === "sem") {
+    return esc(tituloEntradaRef()) + (sub ? `: ${esc(sub)}` : "") + ".";
+  }
+  return `<b>${esc(t)}</b>` + (sub ? `: ${esc(sub)}` : "") + ".";
+}
+function imprenta() {
+  const l = A(S.campos.local) || "[S. l.]";
+  const e = A(S.campos.editora) || "[s. n.]";
+  const a = A(S.campos.ano) || "[s. d.]";
+  return `${esc(l)}: ${esc(e)}, ${esc(a)}.`;
+}
+function edicaoTxt() {
+  const ed = A(S.campos.edicao);
+  return ed ? `${esc(ed.replace(/\D/g, "") || ed)}. ed.` : "";
+}
+function acessoTxt() {
+  const u = A(S.campos.url), ac = A(S.campos.acesso), doi = A(S.campos.doi);
+  const p = [];
+  if (doi) p.push(`DOI: ${esc(doi)}.`);
+  if (u) p.push(`Disponível em: ${esc(u)}.`);
+  if (ac) p.push(`Acesso em: ${esc(dataExtenso(ac))}.`);
+  return p.join(" ");
+}
+function paginasIntervalo() {
+  const i = A(S.campos.paginaInicial), f = A(S.campos.paginaFinal);
+  if (i && f) return `p. ${esc(i)}-${esc(f)}.`;
+  if (i) return `p. ${esc(i)}.`;
+  return "";
+}
+
+function montarReferencia() {
+  const tipo = $("tipoObra").value;
+  const aut = autoresReferencia();
+  const abre = aut ? (/\.(<\/i>)?$/.test(aut) ? aut : aut + ".") : "";
+  const C = S.campos;
+
+  if (tipo === "naoPublicada" || tipo === "elaboracao") return "";
+
+  if (tipo === "livro") {
+    return juntar([abre, tituloDestaque(), edicaoTxt(), imprenta(), A(C.paginas) ? `${esc(C.paginas)} p.` : "", acessoTxt()]);
+  }
+  const semAut = $("tipoAutoria").value === "sem";
+  if (tipo === "capitulo") {
+    const cap = A(C.tituloCapitulo) ? esc(semAut ? tituloEntradaRef() : C.tituloCapitulo) + "." : "";
+    const resp = A(C.responsavelLivro) ? `In: ${esc(C.responsavelLivro)}.` : "In:";
+    return juntar([abre, cap, resp, tituloDestaque(), edicaoTxt(), imprenta(), paginasIntervalo(), acessoTxt()]);
+  }
+  if (tipo === "periodico") {
+    const art = juntar([A(C.tituloArtigo) ? esc(semAut ? tituloEntradaRef() : C.tituloArtigo) : "", A(C.subtituloArtigo) ? ": " + esc(C.subtituloArtigo) : ""]).replace(/\s:/, ":") + ".";
+    const per = `<b>${esc(A(C.titulo))}</b>`;
+    const meio = [A(C.local) ? esc(C.local) : "", A(C.volume) ? "v. " + esc(C.volume) : "", A(C.numero) ? "n. " + esc(C.numero) : ""].filter(Boolean).join(", ");
+    const pgs = paginasIntervalo().replace(/\.$/, "");
+    const data = [MESES[String(parseInt(A(C.mes), 10))] || "", A(C.ano)].filter(Boolean).join(" ");
+    return juntar([abre, art, per + (meio ? ", " + meio : "") + (pgs ? ", " + pgs : "") + (data ? ", " + data : "") + ".", acessoTxt()]);
+  }
+  if (tipo === "norma") {
+    const cod = A(C.codigo) ? `<b>${esc(C.codigo)}</b>` : "";
+    const tit = A(C.titulo) ? `: ${esc(C.titulo)}` : "";
+    const sub = A(C.subtitulo) ? `: ${esc(C.subtitulo)}` : "";
+    return juntar([abre, cod + tit + sub + ".", edicaoTxt(), imprenta(), A(C.paginas) ? `${esc(C.paginas)} p.` : "", A(C.versao) ? esc(C.versao) + "." : "", acessoTxt()]);
+  }
+  if (tipo === "relatorio") {
+    return juntar([abre, tituloDestaque(), imprenta(), A(C.paginas) ? `${esc(C.paginas)} p.` : "",
+      A(C.numeroRelatorio) ? `Relatório técnico n. ${esc(C.numeroRelatorio)}.` : "", A(C.nota) ? esc(C.nota) + "." : "", acessoTxt()]);
+  }
+  if (tipo === "catalogo") {
+    const t = A(C.titulo) ? `<b>${esc(C.titulo)}</b>` : "";
+    const s = A(C.subtitulo) ? `: ${esc(C.subtitulo)}` : "";
+    return juntar([abre, t + s + ".", imprenta(), A(C.paginas) ? `${esc(C.paginas)} p.` : "", A(C.nota) ? esc(C.nota) + "." : "", acessoTxt()]);
+  }
+  if (tipo === "legislacao") {
+    const epi = A(C.epigrafe) ? esc(C.epigrafe) + "." : "";
+    const eme = A(C.ementa) ? esc(C.ementa) + "." : "";
+    const veic = A(C.veiculo) ? `<b>${esc(C.veiculo)}</b>` : "";
+    const det = [A(C.secao) ? "seção " + esc(C.secao) : "", A(C.local) ? esc(C.local) : "", A(C.ano) ? "ano " + esc(C.ano) : "",
+      A(C.pagina) ? "p. " + esc(C.pagina) : "", A(C.dataPub) ? esc(dataExtenso(C.dataPub)) : ""].filter(Boolean).join(", ");
+    return juntar([abre, epi, eme, veic ? veic + (det ? ": " + det : "") + "." : "", acessoTxt()]);
+  }
+  if (tipo === "tese") {
+    const grau = [A(C.grau) || "Tese", A(C.area) ? `(${esc(C.area)})` : ""].filter(Boolean).join(" ");
+    const inst = [A(C.unidade), A(C.instituicao), A(C.local), A(C.ano)].filter(Boolean).map(esc).join(", ");
+    return juntar([abre, tituloDestaque(), A(C.ano) ? esc(C.ano) + "." : "", A(C.folhas) ? `${esc(C.folhas)} f.` : "",
+      `${grau} –`, inst + ".", acessoTxt()]);
+  }
+  if (tipo === "evento") {
+    const trab = A(C.tituloTrabalho) ? esc(semAut ? tituloEntradaRef() : C.tituloTrabalho) + "." : "";
+    const ev = [A(C.nomeEvento).toUpperCase(), A(C.numeroEvento) ? `${esc(C.numeroEvento)}.` : "", A(C.anoEvento), A(C.localEvento)].filter(Boolean).map(esc).join(", ");
+    const anais = `<b>${esc(A(C.tipoPublicacao) || "Anais")}</b> [...]`;
+    return juntar([abre, trab, `In: ${ev}.`, anais + ".", imprenta(), paginasIntervalo(), acessoTxt()]);
+  }
+  if (tipo === "site") {
+    return juntar([abre, tituloDestaque(), [A(C.local), A(C.editora), A(C.ano)].filter(Boolean).map(esc).join(", ") + ".", acessoTxt()]);
+  }
+  return "";
+}
+
+/* ============================================================
+   Chamada da citação
+   ============================================================ */
+function rotuloLoc(l) {
+  const v = A(l.valor);
+  if (!v) return "";
+  switch (l.tipo) {
+    case "p": case "pp": return `p. ${esc(v)}`;
+    case "v": return `v. ${esc(v)}`;
+    case "t": return `t. ${esc(v)}`;
+    case "sec": return `seç. ${esc(v)}`;
+    case "cap": return `cap. ${esc(v)}`;
+    case "art": return `art. ${esc(v)}`;
+    case "inc": return `inc. ${esc(v)}`;
+    case "pt": return `pt. ${esc(v)}`;
+    case "local": return `local. ${esc(v)}`;
+    case "slide": return `slide ${esc(v)}`;
+    default: return esc(v);
+  }
+}
+function locsTexto() {
+  return S.localizacoes.map(rotuloLoc).filter(Boolean);
+}
+function complementos() {
+  const c = [];
+  if ($("traducaoNossa").checked) c.push("tradução nossa");
+  if ($("traducaoPropria").checked) c.push("tradução própria");
+  if ($("grifoNosso").checked) c.push("grifo nosso");
+  if ($("grifoProprio").checked) c.push("grifo próprio");
+  return c;
+}
+function anoCit() {
+  const tipo = $("tipoObra").value;
+  const ano = A(S.campos.ano) || (tipo === "legislacao" ? A(S.campos.ano) : "");
+  return (ano || "[s. d.]") + A($("letraAno").value);
+}
+
+function chamada(posicao) {
+  const sistema = $("sistema").value;
+  const forma = $("forma").value;
+  const locs = locsTexto();
+  const extras = complementos();
+
+  if (sistema === "numerico") {
+    const n = A($("numFonte").value) || "n";
+    const conteudo = [esc(n)].concat(locs, extras).join(", ");
+    return $("numFormato").value === "expoente"
+      ? `<sup>${conteudo}</sup>`
+      : `(${conteudo})`;
+  }
+
+  const aut = autoriaCitacao(posicao) || "<span class='vazio'>Autoria</span>";
+
+  if (forma === "apud") {
+    const ao = esc(tituloCaso($("apudAutor").value)) || "<span class='vazio'>Autoria original</span>";
+    const anoO = esc(A($("apudAno").value)) || "[s. d.]";
+    const pgO = A($("apudPagina").value) ? `, p. ${esc($("apudPagina").value)}` : "";
+    const dir = [anoCit()].concat(locs, extras).join(", ");
+    const miolo = `${ao}, ${anoO}${pgO} <i>apud</i> ${aut}, ${dir}`;
+    return posicao === "parens" ? `(${miolo})` : `${ao} (${anoO}${pgO} <i>apud</i> ${aut}, ${dir})`;
+  }
+
+  const dir = [anoCit()].concat(locs, extras).join(", ");
+  return posicao === "parens" ? `(${aut}, ${dir})` : `${aut} (${dir})`;
+}
+
+function trechoFormatado() {
+  let t = esc(A($("trecho").value));
+  t = t.replace(/&lt;g&gt;([\s\S]*?)&lt;\/g&gt;/g, "<mark><b>$1</b></mark>");
+  return t;
+}
+
+function montarNoTexto() {
+  const forma = $("forma").value;
+  const sistema = $("sistema").value;
+  // no sistema numerico a chamada vem sempre ao fim do trecho citado
+  const posicao = sistema === "numerico" ? "parens" : $("posicao").value;
+  const t = trechoFormatado();
+  const ch = chamada(posicao);
+  const expo = sistema === "numerico" && $("numFormato").value === "expoente";
+  const sep = expo ? "" : " ";
+  const conector = esc(A($("conector").value) || "afirma que");
+
+  if (!t) return `<span class="vazio">Digite o trecho citado para montar a passagem.</span>`;
+
+  if (forma === "diretaLonga") {
+    if (posicao === "sentenca" && sistema !== "numerico") {
+      return `<p style="margin:0 0 10px">Conforme ${ch}:</p><div class="recuo">${t}</div>`;
+    }
+    return `<div class="recuo">${t}${sep}${ch}.</div>`;
+  }
+  if (forma === "indireta") {
+    return posicao === "parens" ? `${t}${sep}${ch}.` : `Conforme ${ch}, ${t.charAt(0).toLowerCase() + t.slice(1)}.`;
+  }
+  // direta curta e apud curto
+  if (posicao === "parens") return `“${t}”${sep}${ch}.`;
+  return `${ch} ${conector} “${t}”.`;
+}
+
+/* ============================================================
+   Fundamento normativo e avisos
+   ============================================================ */
+function fundamento() {
+  const f = [];
+  const forma = $("forma").value, sistema = $("sistema").value, pos = $("posicao").value, aut = $("tipoAutoria").value;
+  f.push(["5.1", "A chamada permite correlacionar a citação com a lista de referências."]);
+  if (sistema === "autordata") {
+    f.push([pos === "parens" ? "6.1.3" : "6.1.4", pos === "parens" ? "Autoria entre parênteses acompanhada da data." : "Autoria na sentença, com a data entre parênteses."]);
+  } else {
+    f.push(["6.2.1", "Numeração consecutiva em algarismos arábicos, sem reinício a cada página."]);
+    f.push(["6.2.3", $("numFormato").value === "expoente" ? "Número indicado em expoente." : "Número entre parênteses, alinhado ao texto."]);
+    if (locsTexto().length) f.push(["6.2.4", "Localização após o número da fonte, separada por vírgula."]);
+  }
+  if (aut === "fisica") f.push(["6.1.1.1", "Entrada pelo sobrenome, em maiúsculas e minúsculas."]);
+  if (aut === "juridica") f.push(["6.1.1.2", "Entrada pelo nome ou pela sigla da instituição; siglas em maiúsculas."]);
+  if (aut === "governamental") f.push(["6.1.1.3", "Entrada pelo nome da jurisdição."]);
+  if (aut === "sem") f.push(["6.1.1.4", "Entrada pelo título, com supressão indicada por [...]."]);
+  if (autoresValidos().length >= 4 && $("usarEtAl").checked) f.push(["6.1.2", "Primeiro autor seguido de et al.; a referência traz todos."]);
+  if ($("desambiguacao").value) f.push(["6.1.5", "Iniciais ou prenomes acrescentados para distinguir homônimos."]);
+  if ($("letraAno").value) f.push(["6.1.6", "Letra minúscula após a data distingue obras do mesmo autor e ano."]);
+  if (forma === "diretaCurta") f.push(["7.1", "Transcrição de até três linhas entre aspas duplas."]);
+  if (forma === "diretaLonga") f.push(["7.1.1", "Recuo de 4 cm, letra menor, espaço simples e sem aspas."]);
+  if (forma === "indireta") f.push(["7.2", "Citação indireta: indicação de página é opcional."]);
+  if (forma === "apud") f.push(["7.3", "Fonte original, apud e fonte consultada; só a consultada é referenciada."]);
+  if (S.localizacoes.some((l) => ["v", "t", "sec"].indexOf(l.tipo) >= 0 && A(l.valor))) f.push(["7.1.3", "Volume, tomo ou seção abreviados antes da página."]);
+  if ($("naoPaginado").checked) f.push(["7.1.4", "Documento não paginado: indica-se a localização do trecho."]);
+  if ($("traducaoNossa").checked || $("traducaoPropria").checked) f.push(["7.1.6", "Tradução declarada como último elemento da chamada."]);
+  if ($("grifoNosso").checked || $("grifoProprio").checked) f.push(["7.1.5", "Destaque declarado ao final da chamada."]);
+  if (A($("trecho").value).indexOf("[...]") >= 0) f.push(["5.2 a)", "Supressão marcada por [...]."]);
+  if (/\[[^\].]*\]/.test(A($("trecho").value).replace(/\[\.\.\.\]/g, ""))) f.push(["5.2 b)", "Interpolação ou comentário entre colchetes."]);
+  if ($("tipoObra").value === "naoPublicada") f.push(["5.3", "Fonte não publicada formalmente: indicada no texto ou em nota, sem referência."]);
+  if ($("tipoObra").value === "elaboracao") f.push(["5.4", "Documento em fase de elaboração: o fato é mencionado em nota."]);
+  return f;
+}
+
+function avisos() {
+  const av = [];
+  const forma = $("forma").value;
+  const direta = forma === "diretaCurta" || forma === "diretaLonga" || forma === "apud";
+  const temLoc = locsTexto().length > 0;
+
+  if (direta && !temLoc && !$("naoPaginado").checked) {
+    av.push(["6.1.3", "Citação direta sem página. Acrescente a página, o localizador ou marque a fonte como não paginada."]);
+  }
+  if ($("naoPaginado").checked && !temLoc) {
+    av.push(["7.1.4", "Fonte não paginada: convém indicar capítulo, artigo, inciso, localizador ou tempo do trecho."]);
+  }
+  if ($("grifoNosso").checked && $("grifoProprio").checked) av.push(["7.1.5", "Escolha apenas uma expressão de destaque."]);
+  if ($("traducaoNossa").checked && $("traducaoPropria").checked) av.push(["7.1.6", "Escolha apenas uma expressão de tradução."]);
+  if ($("sistema").value === "numerico" && !A($("numFonte").value)) av.push(["6.2.1", "Informe o número consecutivo da fonte no texto."]);
+  if ($("sistema").value === "numerico") av.push(["6.2.2", "O sistema numérico não pode ser usado se o trabalho tiver notas de rodapé."]);
+  if (forma === "diretaLonga" && A($("trecho").value).length < 180) {
+    av.push(["7.1.1", "O recuo de 4 cm vale para transcrições com mais de três linhas. Confira o comprimento do trecho no seu layout."]);
+  }
+  if (forma === "diretaCurta" && A($("trecho").value).length > 320) {
+    av.push(["7.1.1", "O trecho parece ultrapassar três linhas. Considere a citação longa, com recuo e sem aspas."]);
+  }
+  if ($("tipoObra").value === "naoPublicada") av.push(["5.3", "Esta fonte não gera entrada na lista de referências."]);
+  if ($("tipoObra").value === "elaboracao") av.push(["5.4", "Declare em nota que o documento está em elaboração."]);
+  const dup = S.lista.filter((f) => f.chaveAutorAno && f.chaveAutorAno === (autoriaCitacao("parens") + "|" + A(S.campos.ano)));
+  if (dup.length && !$("letraAno").value) av.push(["6.1.6", "Já existe uma fonte com a mesma autoria e o mesmo ano na lista. Use letras a, b, c após a data."]);
+  return av;
+}
+
+/* ============================================================
+   Notas de rodapé
+   ============================================================ */
+function montarNota() {
+  const t = $("notaTipo").value;
+  const n = esc(A($("notaNumero").value) || "1");
+  const aut = esc(A($("notaAutor").value).toUpperCase());
+  const ano = esc(A($("notaAno").value));
+  const pag = esc(A($("notaPagina").value));
+  const txt = esc(A($("notaTexto").value));
+  const refAnt = esc(A($("notaRefAnterior").value));
+  const sup = `<sup>${n}</sup>`;
+  const virg = (x) => (x ? ", " + x : "");
+
+  switch (t) {
+    case "primeira": return `${sup}${txt || "<span class='vazio'>Cole a referência completa da fonte.</span>"}`;
+    case "ref": return `${sup}${aut || "AUTOR"}, ref. ${refAnt || "n"}${virg(pag)}.`;
+    case "idem": return `${sup}<i>Id.</i>${virg(ano)}${virg(pag)}.`;
+    case "ibidem": return `${sup}<i>Ibid.</i>${virg(pag)}.`;
+    case "opcit": return `${sup}${aut || "AUTOR"}, <i>op. cit.</i>${virg(pag)}.`;
+    case "loccit": return `${sup}${aut || "AUTOR"}, <i>loc. cit.</i>`;
+    case "passim": return `${sup}${aut || "AUTOR"}${virg(ano)}, <i>passim</i>.`;
+    case "cf": return `${sup}<i>Cf.</i> ${aut || "AUTOR"}${virg(ano)}${virg(pag)}.`;
+    case "etseq": return `${sup}${aut || "AUTOR"}${virg(ano)}${virg(pag)} <i>et seq.</i>`;
+    case "apudNota": return `${sup}${aut || "AUTOR"}, ${ano || "[s. d.]"} <i>apud</i> ${esc(A($("notaApudAutor").value).toUpperCase()) || "AUTOR CONSULTADO"}, ${esc(A($("notaApudAno").value)) || "[s. d.]"}${virg(pag)}.`;
+    case "explicativa": return `${sup}${txt || "<span class='vazio'>Escreva o comentário ou esclarecimento.</span>"}`;
+  }
+  return "";
+}
+function fundamentoNota() {
+  const t = $("notaTipo").value;
+  const m = {
+    primeira: ["8.1.1", "Primeira citação da fonte com referência completa em nota."],
+    ref: ["8.1.2.1", "Remissão ao número da nota anterior, com a abreviatura ref."],
+    idem: ["8.1.2.2 a)", "Id. para mesma autoria em documento diferente, na mesma página."],
+    ibidem: ["8.1.2.2 b)", "Ibid. para a mesma obra imediatamente anterior, na mesma página."],
+    opcit: ["8.1.2.2 c)", "Op. cit. para a mesma obra citada de forma não subsequente."],
+    loccit: ["8.1.2.2 e)", "Loc. cit. quando fonte e localização já foram citadas."],
+    passim: ["8.1.2.2 d)", "Passim quando a informação aparece em vários trechos da fonte."],
+    cf: ["8.1.2.2 f)", "Cf. como sugestão de confronto com outra fonte."],
+    etseq: ["8.1.2.2 g)", "Et seq. para a página citada e as seguintes."],
+    apudNota: ["8.1.3", "Apud indicando a fonte citada e a fonte consultada."],
+    explicativa: ["8.2", "Nota explicativa com numeração consecutiva."],
+  };
+  const base = [["8", "Notas indicadas por números arábicos sequenciais, alinhadas a partir da segunda linha, em corpo menor."]];
+  return base.concat([m[t]]);
+}
+function avisosNota() {
+  const t = $("notaTipo").value;
+  const av = [["6.2.2", "Com notas de rodapé, o sistema de chamada numérico não pode ser usado nas citações."]];
+  if (["idem", "ibidem", "opcit", "loccit"].indexOf(t) >= 0) {
+    av.push(["8.1.2.2", "Estas expressões só valem na mesma página ou folha da citação a que se referem."]);
+  }
+  if (t === "opcit") av.push(["8.1.2.2 c)", "Não use op. cit. se houver duas obras diferentes do mesmo autor na mesma página."]);
+  if (t === "explicativa") av.push(["8.2", "Evite misturar nota explicativa e nota de referência; se ocorrer, siga a regra da nota de referência."]);
+  return av;
+}
+
+/* ============================================================
+   Render geral
+   ============================================================ */
+function renderFund(alvo, itens) {
+  $(alvo).innerHTML = itens.map(([c, d]) => `<div class="fund-item"><b>${esc(c)}</b><span>${esc(d)}</span></div>`).join("");
+}
+function renderAvisos(alvo, itens) {
+  $(alvo).innerHTML = itens.length
+    ? itens.map(([c, d]) => `<div class="aviso"><b>${esc(c)}</b> — ${esc(d)}</div>`).join("")
+    : `<div class="aviso ok"><b>conforme</b> — Nenhuma inconsistência detectada nas opções atuais.</div>`;
+}
+
+function atualizar() {
+  // visibilidade condicional
+  const aut = $("tipoAutoria").value;
+  $("bloco-fisica").classList.toggle("oculto", aut !== "fisica");
+  $("bloco-juridica").classList.toggle("oculto", aut !== "juridica");
+  $("bloco-gov").classList.toggle("oculto", aut !== "governamental");
+  $("bloco-sem").classList.toggle("oculto", aut !== "sem");
+  const numerico = $("sistema").value === "numerico";
+  $("campo-numero").classList.toggle("oculto", !numerico);
+  $("campo-numFormato").classList.toggle("oculto", !numerico);
+  $("campo-posicao").classList.toggle("oculto", numerico);
+  $("bloco-apud").classList.toggle("oculto", $("forma").value !== "apud");
+  $("campo-conector").classList.toggle("oculto", numerico || $("posicao").value !== "sentenca" || $("forma").value === "indireta");
+
+  $("saida-texto").innerHTML = montarNoTexto();
+  const ref = montarReferencia();
+  $("saida-ref").innerHTML = ref || `<span class="vazio">${$("tipoObra").value === "naoPublicada" || $("tipoObra").value === "elaboracao" ? "Esta fonte não entra na lista de referências: indique-a no texto ou em nota." : "Preencha os dados do documento."}</span>`;
+  renderFund("fundamento", fundamento());
+  renderAvisos("avisos", avisos());
+}
+function atualizarNota() {
+  $("saida-nota").innerHTML = montarNota();
+  renderFund("fundamento-nota", fundamentoNota());
+  renderAvisos("avisos-nota", avisosNota());
+}
+
+/* ============================================================
+   Lista de referências
+   ============================================================ */
+function textoSimples(html) {
+  const d = document.createElement("div");
+  d.innerHTML = html;
+  return d.textContent.replace(/\s+/g, " ").trim();
+}
+function renderLista() {
+  const cont = $("tabela-lista");
+  if (!S.lista.length) {
+    cont.innerHTML = `<div class="vazio-lista">Nenhuma fonte adicionada. Monte uma citação e use “Adicionar à lista de referências”.</div>`;
+    $("avisos-lista").innerHTML = "";
+    return;
+  }
+  const itens = S.lista.slice();
+  if (S.ordem === "alfabetica") itens.sort((a, b) => textoSimples(a.ref).localeCompare(textoSimples(b.ref), "pt-BR"));
+  cont.innerHTML = `<table><thead><tr><th>${S.ordem === "alfabetica" ? "#" : "Nº"}</th><th>Referência</th><th>Ações</th></tr></thead><tbody>
+    ${itens.map((f, i) => `<tr>
+      <td class="num">${i + 1}</td>
+      <td class="ref">${f.ref}</td>
+      <td class="ferramentas">
+        <button class="acao mini" type="button" data-carregar="${f.id}">Editar</button>
+        <button class="acao mini perigo" type="button" data-excluir="${f.id}">Excluir</button>
+      </td></tr>`).join("")}
+  </tbody></table>`;
+
+  const mapa = {};
+  S.lista.forEach((f) => { if (f.chaveAutorAno) mapa[f.chaveAutorAno] = (mapa[f.chaveAutorAno] || 0) + 1; });
+  const dups = Object.keys(mapa).filter((k) => mapa[k] > 1);
+  $("avisos-lista").innerHTML = dups.length
+    ? `<div class="aviso"><b>6.1.6</b> — Há fontes com a mesma autoria e o mesmo ano (${dups.map((d) => esc(d.split("|")[0])).join(", ")}). Acrescente a, b, c à data nas citações e na lista.</div>`
+    : "";
+}
+
+function coletarFonte() {
+  return {
+    id: "f" + Date.now() + Math.random().toString(36).slice(2, 6),
+    tipoObra: $("tipoObra").value,
+    tipoAutoria: $("tipoAutoria").value,
+    autores: JSON.parse(JSON.stringify(S.autores)),
+    entidade: $("entidade").value, sigla: $("sigla").value, usarSigla: $("usarSigla").checked,
+    jurisdicao: $("jurisdicao").value, orgao: $("orgao").value,
+    monossilabo: $("monossilabo").checked, usarEtAl: $("usarEtAl").checked,
+    campos: JSON.parse(JSON.stringify(S.campos)),
+    ref: montarReferencia(),
+    chamadaTexto: chamada($("posicao").value),
+    chaveAutorAno: autoriaCitacao("parens") + "|" + A(S.campos.ano),
+  };
+}
+function carregarFonte(f) {
+  $("tipoObra").value = f.tipoObra;
+  $("tipoAutoria").value = f.tipoAutoria;
+  S.autores = f.autores && f.autores.length ? f.autores : [{ sobrenome: "", prenome: "", papel: "" }];
+  S.campos = f.campos || {};
+  $("entidade").value = f.entidade || ""; $("sigla").value = f.sigla || ""; $("usarSigla").checked = !!f.usarSigla;
+  $("jurisdicao").value = f.jurisdicao || ""; $("orgao").value = f.orgao || "";
+  $("monossilabo").checked = !!f.monossilabo; $("usarEtAl").checked = !!f.usarEtAl;
+  renderCampos(); renderAutores(); atualizar();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* ============================================================
+   Copiar / exportar
+   ============================================================ */
+async function copiarElemento(id) {
+  const el = $(id);
+  if (!el) return;
+  const html = `<div style="font-family:'Times New Roman',serif;font-size:12pt;line-height:1.5">${el.innerHTML
+    .replace(/class="recuo"/g, 'style="margin-left:4cm;font-size:10pt;line-height:1.1;text-align:justify"')
+    .replace(/<span class="vazio">[\s\S]*?<\/span>/g, "")}</div>`;
+  const texto = el.innerText.trim();
+  try {
+    if (navigator.clipboard && window.ClipboardItem) {
+      await navigator.clipboard.write([new ClipboardItem({
+        "text/html": new Blob([html], { type: "text/html" }),
+        "text/plain": new Blob([texto], { type: "text/plain" }),
+      })]);
+    } else {
+      await navigator.clipboard.writeText(texto);
+    }
+    toast("Copiado com a formatação preservada.");
+  } catch (err) {
+    const ta = document.createElement("textarea");
+    ta.value = texto; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copiado como texto simples."); }
+    catch (e2) { toast("Não foi possível copiar. Selecione o texto manualmente."); }
+    document.body.removeChild(ta);
+  }
+}
+function baixar(nome, conteudo, tipo) {
+  const b = new Blob([conteudo], { type: tipo });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(b); a.download = nome;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* ============================================================
+   Eventos
+   ============================================================ */
+document.querySelectorAll(".aba").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll(".aba").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
+  document.querySelectorAll(".painel").forEach((p) => p.classList.toggle("oculto", p.id !== b.dataset.painel));
+}));
+
+$("tipoObra").addEventListener("change", () => {
+  const t = $("tipoObra").value;
+  if (t === "norma") {
+    $("tipoAutoria").value = "juridica";
+    if (!A($("entidade").value)) { $("entidade").value = "Associação Brasileira de Normas Técnicas"; $("sigla").value = "ABNT"; $("usarSigla").checked = true; }
+    if (!A(S.campos.local)) S.campos.local = "Rio de Janeiro";
+    if (!A(S.campos.editora)) S.campos.editora = "ABNT";
+  }
+  if (t === "legislacao" && $("tipoAutoria").value !== "governamental") {
+    $("tipoAutoria").value = "governamental";
+    if (!A($("jurisdicao").value)) $("jurisdicao").value = "Brasil";
+  }
+  if (t === "catalogo" && $("tipoAutoria").value === "fisica") $("tipoAutoria").value = "juridica";
+  renderCampos(); atualizar();
+});
+
+document.addEventListener("input", (ev) => {
+  const el = ev.target;
+  if (el.dataset.campo) { S.campos[el.dataset.campo] = el.value; atualizar(); return; }
+  if (el.dataset.autor !== undefined && el.dataset.parte) { S.autores[+el.dataset.autor][el.dataset.parte] = el.value; atualizar(); return; }
+  if (el.dataset.loc !== undefined && el.dataset.parte) { S.localizacoes[+el.dataset.loc][el.dataset.parte] = el.value; atualizar(); return; }
+  if (el.closest("#p-notas")) { atualizarNota(); return; }
+  if (el.closest("#p-citacao")) atualizar();
+});
+document.addEventListener("change", (ev) => {
+  const el = ev.target;
+  if (el.dataset.autor !== undefined && el.dataset.parte) { S.autores[+el.dataset.autor][el.dataset.parte] = el.value; atualizar(); return; }
+  if (el.dataset.loc !== undefined && el.dataset.parte) { S.localizacoes[+el.dataset.loc][el.dataset.parte] = el.value; atualizar(); return; }
+  if (el.closest("#p-notas")) { atualizarNota(); return; }
+  if (el.closest("#p-citacao")) atualizar();
+});
+
+document.addEventListener("click", (ev) => {
+  const b = ev.target.closest("button");
+  if (!b) return;
+  if (b.id === "add-autor") { S.autores.push({ sobrenome: "", prenome: "", papel: "" }); renderAutores(); atualizar(); }
+  if (b.dataset.removeAutor !== undefined) {
+    S.autores.splice(+b.dataset.removeAutor, 1);
+    if (!S.autores.length) S.autores = [{ sobrenome: "", prenome: "", papel: "" }];
+    renderAutores(); atualizar();
+  }
+  if (b.id === "add-loc") { S.localizacoes.push({ tipo: "p", valor: "" }); renderLocalizacoes(); atualizar(); }
+  if (b.dataset.removeLoc !== undefined) {
+    S.localizacoes.splice(+b.dataset.removeLoc, 1);
+    if (!S.localizacoes.length) S.localizacoes = [{ tipo: "p", valor: "" }];
+    renderLocalizacoes(); atualizar();
+  }
+  if (b.dataset.insere) {
+    const ta = $("trecho"), i = ta.selectionStart, j = ta.selectionEnd;
+    ta.value = ta.value.slice(0, i) + b.dataset.insere + ta.value.slice(j);
+    ta.focus(); ta.selectionStart = ta.selectionEnd = i + b.dataset.insere.length - (b.dataset.insere === "[ ]" ? 1 : 0);
+    atualizar();
+  }
+  if (b.id === "btn-grifar") {
+    const ta = $("trecho"), i = ta.selectionStart, j = ta.selectionEnd;
+    if (i === j) { toast("Selecione o trecho a destacar dentro da citação."); return; }
+    ta.value = ta.value.slice(0, i) + "<g>" + ta.value.slice(i, j) + "</g>" + ta.value.slice(j);
+    $("grifoNosso").checked = true;
+    atualizar();
+  }
+  if (b.dataset.copiar) copiarElemento(b.dataset.copiar);
+  if (b.id === "salvar-fonte") {
+    const f = coletarFonte();
+    if (!f.ref) { toast("Esta fonte não gera referência ou ainda está incompleta."); return; }
+    S.lista.push(f); renderLista(); atualizar();
+    toast("Fonte adicionada à lista de referências.");
+  }
+  if (b.dataset.carregar) {
+    const f = S.lista.find((x) => x.id === b.dataset.carregar);
+    if (f) { carregarFonte(f); document.querySelector('.aba[data-painel="p-citacao"]').click(); }
+  }
+  if (b.dataset.excluir) { S.lista = S.lista.filter((x) => x.id !== b.dataset.excluir); renderLista(); atualizar(); }
+  if (b.id === "ordem-alfabetica") { S.ordem = "alfabetica"; renderLista(); }
+  if (b.id === "ordem-entrada") { S.ordem = "entrada"; renderLista(); }
+  if (b.id === "zerar-lista") { if (confirm("Esvaziar a lista de referências desta sessão?")) { S.lista = []; renderLista(); } }
+  if (b.id === "exportar-json") {
+    baixar("referencias-memorial.json", JSON.stringify({ versao: 1, norma: "ABNT NBR 10520:2023", lista: S.lista }, null, 2), "application/json");
+  }
+  if (b.id === "importar-json") $("arquivo-json").click();
+  if (b.id === "limpar") {
+    S.campos = {}; S.autores = [{ sobrenome: "", prenome: "", papel: "" }]; S.localizacoes = [{ tipo: "p", valor: "" }];
+    ["entidade", "sigla", "jurisdicao", "orgao", "trecho", "numFonte", "apudAutor", "apudAno", "apudPagina", "conector"].forEach((id) => { $(id).value = ""; });
+    ["usarSigla", "monossilabo", "usarEtAl", "grifoNosso", "grifoProprio", "traducaoNossa", "traducaoPropria", "naoPaginado"].forEach((id) => { $(id).checked = false; });
+    $("letraAno").value = ""; $("desambiguacao").value = "";
+    $("forma").value = "diretaCurta"; $("posicao").value = "parens";
+    renderCampos(); renderAutores(); renderLocalizacoes(); atualizar();
+  }
+  if (b.id === "usar-fonte-nota") {
+    $("notaAutor").value = textoSimples(autoriaCitacao("parens")).toUpperCase();
+    $("notaAno").value = A(S.campos.ano);
+    const l = locsTexto();
+    $("notaPagina").value = l.length ? textoSimples(l[0]) : "";
+    $("notaTexto").value = textoSimples(montarReferencia());
+    atualizarNota();
+  }
+});
+
+$("arquivo-json").addEventListener("change", (ev) => {
+  const arq = ev.target.files && ev.target.files[0];
+  if (!arq) return;
+  const fr = new FileReader();
+  fr.onload = () => {
+    try {
+      const dados = JSON.parse(fr.result);
+      if (!dados.lista) throw new Error("estrutura inesperada");
+      S.lista = dados.lista; renderLista(); toast("Projeto aberto: " + S.lista.length + " fontes.");
+    } catch (e) { toast("Arquivo inválido. Abra um .json salvo por este aplicativo."); }
+    ev.target.value = "";
+  };
+  fr.readAsText(arq);
+});
+
+/* ============================================================
+   Início
+   ============================================================ */
+renderCampos();
+renderAutores();
+renderLocalizacoes();
+renderLista();
+atualizar();
+atualizarNota();
+</script>
+</body>
+</html>
