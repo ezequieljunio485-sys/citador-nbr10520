@@ -301,6 +301,15 @@ td.ferramentas{white-space:nowrap;width:1%}
               <option value="expoente">Em expoente</option>
             </select>
           </div>
+          <div class="campo c6 oculto" id="campo-expressao"><label for="expressaoVerbal">Expressão no texto (5.3)</label>
+            <select id="expressaoVerbal">
+              <option value="informação verbal">informação verbal</option>
+              <option value="informação oral">informação oral</option>
+              <option value="comunicação pessoal">comunicação pessoal</option>
+            </select>
+          </div>
+          <div class="campo c3 oculto" id="campo-numNota"><label for="numNota">Nº da nota de rodapé</label>
+            <input type="text" id="numNota" placeholder="1" inputmode="numeric"></div>
         </div>
 
         <div class="campo" style="margin-top:12px">
@@ -364,7 +373,7 @@ td.ferramentas{white-space:nowrap;width:1%}
       <p class="rotulo-saida">No texto <button class="acao mini" type="button" data-copiar="saida-texto">Copiar</button></p>
       <div class="saida" id="saida-texto"><span class="vazio">Preencha a fonte e o trecho para ver a citação montada.</span></div>
       <div class="divisor"></div>
-      <p class="rotulo-saida">Na lista de referências <button class="acao mini" type="button" data-copiar="saida-ref">Copiar</button></p>
+      <p class="rotulo-saida"><span id="rotulo-ref">Na lista de referências</span> <button class="acao mini" type="button" data-copiar="saida-ref">Copiar</button></p>
       <div class="ref-saida" id="saida-ref"><span class="vazio">A referência aparece aqui.</span></div>
       <div class="fundamento">
         <h3>Fundamento normativo</h3>
@@ -435,7 +444,7 @@ td.ferramentas{white-space:nowrap;width:1%}
       <div class="linha-botoes" style="margin-top:0">
         <button class="acao" type="button" id="ordem-alfabetica">Ordenar alfabeticamente</button>
         <button class="acao" type="button" id="ordem-entrada">Ordenar pela entrada no texto</button>
-        <button class="acao" type="button" data-copiar="tabela-lista">Copiar lista inteira</button>
+        <button class="acao" type="button" id="copiar-lista">Copiar lista inteira</button>
         <button class="acao" type="button" id="exportar-json">Salvar projeto (.json)</button>
         <button class="acao" type="button" id="importar-json">Abrir projeto (.json)</button>
         <button class="acao perigo" type="button" id="zerar-lista">Esvaziar lista</button>
@@ -553,10 +562,47 @@ function toast(msg) {
 const S = {
   autores: [{ sobrenome: "", prenome: "", papel: "" }],
   localizacoes: [{ tipo: "p", valor: "" }],
+  /* Cada tipo de documento tem seu proprio conjunto de campos. S.campos e sempre
+     uma referencia viva ao conjunto do tipo selecionado, para que chaves de mesmo
+     nome (titulo, local, editora, ano) nao migrem de um tipo para outro. */
+  porTipo: {},
   campos: {},
+  autoUI: null,
   lista: [],
   ordem: "alfabetica",
 };
+
+function trocarBucket(tipo) {
+  if (!S.porTipo[tipo]) S.porTipo[tipo] = {};
+  S.campos = S.porTipo[tipo];
+  return S.campos;
+}
+
+/* Valores que o proprio aplicativo preenche (ABNT para normas, Brasil para
+   legislacao) sao registrados aqui e desfeitos ao sair do tipo, desde que o
+   usuario nao os tenha alterado no meio do caminho. */
+function marcarAutoUI(tipo, mapa) {
+  const anteriores = {}, valores = {};
+  Object.keys(mapa).forEach((id) => {
+    const el = $(id);
+    if (!el) return;
+    if (el.type === "checkbox") { anteriores[id] = el.checked; el.checked = mapa[id]; }
+    else { anteriores[id] = el.value; el.value = mapa[id]; }
+    valores[id] = mapa[id];
+  });
+  S.autoUI = { tipo: tipo, valores: valores, anteriores: anteriores };
+}
+function desfazerAutoUI(novoTipo) {
+  if (!S.autoUI || S.autoUI.tipo === novoTipo) return;
+  const a = S.autoUI;
+  Object.keys(a.valores).forEach((id) => {
+    const el = $(id);
+    if (!el) return;
+    if (el.type === "checkbox") { if (el.checked === a.valores[id]) el.checked = a.anteriores[id]; }
+    else if (A(el.value) === A(a.valores[id])) el.value = a.anteriores[id];
+  });
+  S.autoUI = null;
+}
 
 const ARTIGOS = ["a", "o", "as", "os", "um", "uma", "uns", "umas"];
 
@@ -653,6 +699,11 @@ const TIPOS_LOC = [
    ============================================================ */
 function renderCampos() {
   const tipo = $("tipoObra").value;
+  trocarBucket(tipo);
+  /* Rede de seguranca: remove chaves que nao pertencem ao esquema deste tipo,
+     para que nada invisivel (DOI, volume, pagina inicial) entre na referencia. */
+  const permitidas = ESQUEMA[tipo].map((c) => c[0]);
+  Object.keys(S.campos).forEach((k) => { if (permitidas.indexOf(k) < 0) delete S.campos[k]; });
   const cont = $("campos-obra");
   cont.innerHTML = ESQUEMA[tipo].map(([k, rot, cls, t]) => {
     const val = esc(S.campos[k] || "");
@@ -818,6 +869,56 @@ function paginasIntervalo() {
   return "";
 }
 
+/* Tipos que, por 5.3 e 5.4, nao geram entrada na lista de referencias:
+   os dados vao para a nota de rodape e a chamada usa expressao entre parenteses. */
+const SEM_REFERENCIA = ["naoPublicada", "elaboracao"];
+function semReferencia(t) {
+  return SEM_REFERENCIA.indexOf(t || $("tipoObra").value) >= 0;
+}
+
+/* Na nota de rodape a autoria e escrita na ordem direta, nao invertida. */
+function autoriaNota() {
+  const tipo = $("tipoAutoria").value;
+  if (tipo === "juridica") return tituloCaso($("entidade").value) || A($("sigla").value).toUpperCase();
+  if (tipo === "governamental") return juntar([tituloCaso($("jurisdicao").value), A($("orgao").value)]);
+  if (tipo === "sem") return "";
+  const lista = autoresValidos();
+  if (!lista.length) return "";
+  const nomes = lista.map((a) => juntar([tituloCaso(a.prenome), tituloCaso(a.sobrenome)]));
+  if (nomes.length === 1) return nomes[0];
+  return nomes.slice(0, -1).join(", ") + " e " + nomes[nomes.length - 1];
+}
+
+function montarNotaFonte() {
+  const t = $("tipoObra").value;
+  const C = S.campos;
+  const aut = autoriaNota();
+
+  if (t === "naoPublicada") {
+    const desc = A(C.titulo);
+    if (!desc && !aut) return "";
+    let s = desc ? primeiraMaiuscula(desc) : "Informação";
+    if (aut) s += " fornecida por " + aut;
+    const p = [];
+    if (A(C.local)) p.push("em " + A(C.local));
+    const data = A(C.dataPub) ? dataExtenso(C.dataPub) : A(C.ano);
+    if (data) p.push("em " + data);
+    return esc(s + (p.length ? ", " + p.join(", ") : "")) + ".";
+  }
+
+  if (t === "elaboracao") {
+    const tit = A(C.titulo);
+    if (!tit && !aut) return "";
+    const p = [tit || "Documento"];
+    if (aut) p.push("de autoria de " + aut);
+    if (A(C.editora)) p.push("a ser editado por " + A(C.editora));
+    if (A(C.ano)) p.push(A(C.ano));
+    return esc(p.join(", ")) + ".";
+  }
+
+  return "";
+}
+
 function montarReferencia() {
   const tipo = $("tipoObra").value;
   const aut = autoresReferencia();
@@ -927,6 +1028,14 @@ function chamada(posicao) {
   const locs = locsTexto();
   const extras = complementos();
 
+  if (semReferencia()) {
+    const expr = $("tipoObra").value === "naoPublicada"
+      ? (A($("expressaoVerbal").value) || "informação verbal")
+      : "em fase de elaboração";
+    const n = A($("numNota").value);
+    return `(${esc(expr)})` + (n ? `<sup>${esc(n)}</sup>` : "");
+  }
+
   if (sistema === "numerico") {
     const n = A($("numFonte").value) || "n";
     const conteudo = [esc(n)].concat(locs, extras).join(", ");
@@ -960,10 +1069,10 @@ function montarNoTexto() {
   const forma = $("forma").value;
   const sistema = $("sistema").value;
   // no sistema numerico a chamada vem sempre ao fim do trecho citado
-  const posicao = sistema === "numerico" ? "parens" : $("posicao").value;
+  const posicao = (sistema === "numerico" || semReferencia()) ? "parens" : $("posicao").value;
   const t = trechoFormatado();
   const ch = chamada(posicao);
-  const expo = sistema === "numerico" && $("numFormato").value === "expoente";
+  const expo = !semReferencia() && sistema === "numerico" && $("numFormato").value === "expoente";
   const sep = expo ? "" : " ";
   const conector = esc(A($("conector").value) || "afirma que");
 
@@ -1025,7 +1134,7 @@ function avisos() {
   const direta = forma === "diretaCurta" || forma === "diretaLonga" || forma === "apud";
   const temLoc = locsTexto().length > 0;
 
-  if (direta && !temLoc && !$("naoPaginado").checked) {
+  if (direta && !temLoc && !$("naoPaginado").checked && !semReferencia()) {
     av.push(["6.1.3", "Citação direta sem página. Acrescente a página, o localizador ou marque a fonte como não paginada."]);
   }
   if ($("naoPaginado").checked && !temLoc) {
@@ -1041,8 +1150,10 @@ function avisos() {
   if (forma === "diretaCurta" && A($("trecho").value).length > 320) {
     av.push(["7.1.1", "O trecho parece ultrapassar três linhas. Considere a citação longa, com recuo e sem aspas."]);
   }
-  if ($("tipoObra").value === "naoPublicada") av.push(["5.3", "Esta fonte não gera entrada na lista de referências."]);
-  if ($("tipoObra").value === "elaboracao") av.push(["5.4", "Declare em nota que o documento está em elaboração."]);
+  if ($("tipoObra").value === "naoPublicada") av.push(["5.3", "Fonte não publicada: a chamada usa a expressão entre parênteses e os dados vão para a nota de rodapé, não para a lista de referências."]);
+  if ($("tipoObra").value === "elaboracao") av.push(["5.4", "Documento em elaboração: a chamada traz (em fase de elaboração) e os dados vão para a nota de rodapé."]);
+  if (semReferencia() && !A($("numNota").value)) av.push(["8", "Informe o número da nota de rodapé que acompanha a expressão no texto."]);
+  if (semReferencia() && !montarNotaFonte()) av.push(["5.3 e 5.4", "Preencha a descrição da fonte e a autoria: sem esses dados a nota de rodapé sai vazia."]);
   const dup = S.lista.filter((f) => f.chaveAutorAno && f.chaveAutorAno === (autoriaCitacao("parens") + "|" + A(S.campos.ano)));
   if (dup.length && !$("letraAno").value) av.push(["6.1.6", "Já existe uma fonte com a mesma autoria e o mesmo ano na lista. Use letras a, b, c após a data."]);
   return av;
@@ -1126,15 +1237,19 @@ function atualizar() {
   $("bloco-gov").classList.toggle("oculto", aut !== "governamental");
   $("bloco-sem").classList.toggle("oculto", aut !== "sem");
   const numerico = $("sistema").value === "numerico";
-  $("campo-numero").classList.toggle("oculto", !numerico);
-  $("campo-numFormato").classList.toggle("oculto", !numerico);
-  $("campo-posicao").classList.toggle("oculto", numerico);
+  const naoRef = semReferencia();
+  $("campo-numero").classList.toggle("oculto", !numerico || naoRef);
+  $("campo-numFormato").classList.toggle("oculto", !numerico || naoRef);
+  $("campo-posicao").classList.toggle("oculto", numerico || naoRef);
+  $("campo-expressao").classList.toggle("oculto", $("tipoObra").value !== "naoPublicada");
+  $("campo-numNota").classList.toggle("oculto", !naoRef);
   $("bloco-apud").classList.toggle("oculto", $("forma").value !== "apud");
-  $("campo-conector").classList.toggle("oculto", numerico || $("posicao").value !== "sentenca" || $("forma").value === "indireta");
+  $("campo-conector").classList.toggle("oculto", numerico || naoRef || $("posicao").value !== "sentenca" || $("forma").value === "indireta");
 
   $("saida-texto").innerHTML = montarNoTexto();
-  const ref = montarReferencia();
-  $("saida-ref").innerHTML = ref || `<span class="vazio">${$("tipoObra").value === "naoPublicada" || $("tipoObra").value === "elaboracao" ? "Esta fonte não entra na lista de referências: indique-a no texto ou em nota." : "Preencha os dados do documento."}</span>`;
+  $("rotulo-ref").textContent = naoRef ? "Em nota de rodapé (5.3 e 5.4)" : "Na lista de referências";
+  const ref = naoRef ? montarNotaFonte() : montarReferencia();
+  $("saida-ref").innerHTML = ref || `<span class="vazio">${naoRef ? "Preencha a descrição da fonte e a autoria para montar a nota de rodapé." : "Preencha os dados do documento."}</span>`;
   renderFund("fundamento", fundamento());
   renderAvisos("avisos", avisos());
 }
@@ -1159,20 +1274,33 @@ function renderLista() {
     $("avisos-lista").innerHTML = "";
     return;
   }
-  const itens = S.lista.slice();
-  if (S.ordem === "alfabetica") itens.sort((a, b) => textoSimples(a.ref).localeCompare(textoSimples(b.ref), "pt-BR"));
-  cont.innerHTML = `<table><thead><tr><th>${S.ordem === "alfabetica" ? "#" : "Nº"}</th><th>Referência</th><th>Ações</th></tr></thead><tbody>
-    ${itens.map((f, i) => `<tr>
+
+  const refs = S.lista.filter((f) => !f.semRef);
+  const notas = S.lista.filter((f) => f.semRef);
+
+  const ordenadas = refs.slice();
+  if (S.ordem === "alfabetica") ordenadas.sort((a, b) => textoSimples(a.ref).localeCompare(textoSimples(b.ref), "pt-BR"));
+
+  const linhas = (arr, campo) => arr.map((f, i) => `<tr>
       <td class="num">${i + 1}</td>
-      <td class="ref">${f.ref}</td>
+      <td class="ref">${f[campo] || "<span class=\"vazio\">sem conteúdo</span>"}</td>
       <td class="ferramentas">
         <button class="acao mini" type="button" data-carregar="${f.id}">Editar</button>
         <button class="acao mini perigo" type="button" data-excluir="${f.id}">Excluir</button>
-      </td></tr>`).join("")}
-  </tbody></table>`;
+      </td></tr>`).join("");
+
+  let html = "";
+  if (ordenadas.length) {
+    html += `<table><thead><tr><th>${S.ordem === "alfabetica" ? "#" : "Nº"}</th><th>Referência</th><th>Ações</th></tr></thead><tbody>${linhas(ordenadas, "ref")}</tbody></table>`;
+  }
+  if (notas.length) {
+    html += `<p class="rotulo-saida" style="margin:22px 0 8px">Fontes indicadas em nota — 5.3 e 5.4 · não integram a lista de referências</p>
+      <table><thead><tr><th>Nº</th><th>Nota de rodapé</th><th>Ações</th></tr></thead><tbody>${linhas(notas, "nota")}</tbody></table>`;
+  }
+  cont.innerHTML = html;
 
   const mapa = {};
-  S.lista.forEach((f) => { if (f.chaveAutorAno) mapa[f.chaveAutorAno] = (mapa[f.chaveAutorAno] || 0) + 1; });
+  refs.forEach((f) => { if (f.chaveAutorAno) mapa[f.chaveAutorAno] = (mapa[f.chaveAutorAno] || 0) + 1; });
   const dups = Object.keys(mapa).filter((k) => mapa[k] > 1);
   $("avisos-lista").innerHTML = dups.length
     ? `<div class="aviso"><b>6.1.6</b> — Há fontes com a mesma autoria e o mesmo ano (${dups.map((d) => esc(d.split("|")[0])).join(", ")}). Acrescente a, b, c à data nas citações e na lista.</div>`
@@ -1190,6 +1318,8 @@ function coletarFonte() {
     monossilabo: $("monossilabo").checked, usarEtAl: $("usarEtAl").checked,
     campos: JSON.parse(JSON.stringify(S.campos)),
     ref: montarReferencia(),
+    nota: montarNotaFonte(),
+    semRef: semReferencia(),
     chamadaTexto: chamada($("posicao").value),
     chaveAutorAno: autoriaCitacao("parens") + "|" + A(S.campos.ano),
   };
@@ -1198,7 +1328,11 @@ function carregarFonte(f) {
   $("tipoObra").value = f.tipoObra;
   $("tipoAutoria").value = f.tipoAutoria;
   S.autores = f.autores && f.autores.length ? f.autores : [{ sobrenome: "", prenome: "", papel: "" }];
-  S.campos = f.campos || {};
+  /* A fonte carregada assume o conjunto de campos do seu proprio tipo e os dados
+     de autoria vem gravados no registro, entao nao ha auto-preenchimento a desfazer. */
+  S.autoUI = null;
+  S.porTipo[f.tipoObra] = Object.assign({}, f.campos || {});
+  S.campos = S.porTipo[f.tipoObra];
   $("entidade").value = f.entidade || ""; $("sigla").value = f.sigla || ""; $("usarSigla").checked = !!f.usarSigla;
   $("jurisdicao").value = f.jurisdicao || ""; $("orgao").value = f.orgao || "";
   $("monossilabo").checked = !!f.monossilabo; $("usarEtAl").checked = !!f.usarEtAl;
@@ -1215,7 +1349,10 @@ async function copiarElemento(id) {
   const html = `<div style="font-family:'Times New Roman',serif;font-size:12pt;line-height:1.5">${el.innerHTML
     .replace(/class="recuo"/g, 'style="margin-left:4cm;font-size:10pt;line-height:1.1;text-align:justify"')
     .replace(/<span class="vazio">[\s\S]*?<\/span>/g, "")}</div>`;
-  const texto = el.innerText.trim();
+  return copiarConteudo(html, el.innerText.trim());
+}
+
+async function copiarConteudo(html, texto) {
   try {
     if (navigator.clipboard && window.ClipboardItem) {
       await navigator.clipboard.write([new ClipboardItem({
@@ -1252,17 +1389,27 @@ document.querySelectorAll(".aba").forEach((b) => b.addEventListener("click", () 
 
 $("tipoObra").addEventListener("change", () => {
   const t = $("tipoObra").value;
+  desfazerAutoUI(t);
+  trocarBucket(t);
+
   if (t === "norma") {
-    $("tipoAutoria").value = "juridica";
-    if (!A($("entidade").value)) { $("entidade").value = "Associação Brasileira de Normas Técnicas"; $("sigla").value = "ABNT"; $("usarSigla").checked = true; }
+    const mapa = { tipoAutoria: "juridica" };
+    if (!A($("entidade").value)) {
+      mapa.entidade = "Associação Brasileira de Normas Técnicas";
+      mapa.sigla = "ABNT";
+      mapa.usarSigla = true;
+    }
+    marcarAutoUI(t, mapa);
     if (!A(S.campos.local)) S.campos.local = "Rio de Janeiro";
     if (!A(S.campos.editora)) S.campos.editora = "ABNT";
   }
-  if (t === "legislacao" && $("tipoAutoria").value !== "governamental") {
-    $("tipoAutoria").value = "governamental";
-    if (!A($("jurisdicao").value)) $("jurisdicao").value = "Brasil";
+  if (t === "legislacao") {
+    const mapa = { tipoAutoria: "governamental" };
+    if (!A($("jurisdicao").value)) mapa.jurisdicao = "Brasil";
+    marcarAutoUI(t, mapa);
   }
-  if (t === "catalogo" && $("tipoAutoria").value === "fisica") $("tipoAutoria").value = "juridica";
+  if (t === "catalogo" && $("tipoAutoria").value === "fisica") marcarAutoUI(t, { tipoAutoria: "juridica" });
+
   renderCampos(); atualizar();
 });
 
@@ -1313,9 +1460,11 @@ document.addEventListener("click", (ev) => {
   if (b.dataset.copiar) copiarElemento(b.dataset.copiar);
   if (b.id === "salvar-fonte") {
     const f = coletarFonte();
-    if (!f.ref) { toast("Esta fonte não gera referência ou ainda está incompleta."); return; }
+    if (!f.ref && !f.nota) { toast("Preencha os dados da fonte antes de adicionar."); return; }
     S.lista.push(f); renderLista(); atualizar();
-    toast("Fonte adicionada à lista de referências.");
+    toast(f.semRef
+      ? "Fonte registrada em nota de rodapé — não entra na lista de referências (5.3 e 5.4)."
+      : "Fonte adicionada à lista de referências.");
   }
   if (b.dataset.carregar) {
     const f = S.lista.find((x) => x.id === b.dataset.carregar);
@@ -1325,13 +1474,21 @@ document.addEventListener("click", (ev) => {
   if (b.id === "ordem-alfabetica") { S.ordem = "alfabetica"; renderLista(); }
   if (b.id === "ordem-entrada") { S.ordem = "entrada"; renderLista(); }
   if (b.id === "zerar-lista") { if (confirm("Esvaziar a lista de referências desta sessão?")) { S.lista = []; renderLista(); } }
+  if (b.id === "copiar-lista") {
+    const itens = S.lista.filter((f) => !f.semRef).map((f) => f.ref);
+    if (!itens.length) { toast("Não há referências na lista."); return; }
+    if (S.ordem === "alfabetica") itens.sort((x, y) => textoSimples(x).localeCompare(textoSimples(y), "pt-BR"));
+    const html = `<div style="font-family:'Times New Roman',serif;font-size:12pt;line-height:1.5">${itens.map((r) => `<p style="margin:0 0 12pt;text-align:left">${r}</p>`).join("")}</div>`;
+    copiarConteudo(html, itens.map((r) => textoSimples(r)).join("\n"));
+  }
   if (b.id === "exportar-json") {
     baixar("referencias-memorial.json", JSON.stringify({ versao: 1, norma: "ABNT NBR 10520:2023", lista: S.lista }, null, 2), "application/json");
   }
   if (b.id === "importar-json") $("arquivo-json").click();
   if (b.id === "limpar") {
-    S.campos = {}; S.autores = [{ sobrenome: "", prenome: "", papel: "" }]; S.localizacoes = [{ tipo: "p", valor: "" }];
-    ["entidade", "sigla", "jurisdicao", "orgao", "trecho", "numFonte", "apudAutor", "apudAno", "apudPagina", "conector"].forEach((id) => { $(id).value = ""; });
+    S.porTipo = {}; S.autoUI = null; trocarBucket($("tipoObra").value);
+    S.autores = [{ sobrenome: "", prenome: "", papel: "" }]; S.localizacoes = [{ tipo: "p", valor: "" }];
+    ["entidade", "sigla", "jurisdicao", "orgao", "trecho", "numFonte", "numNota", "apudAutor", "apudAno", "apudPagina", "conector"].forEach((id) => { $(id).value = ""; });
     ["usarSigla", "monossilabo", "usarEtAl", "grifoNosso", "grifoProprio", "traducaoNossa", "traducaoPropria", "naoPaginado"].forEach((id) => { $(id).checked = false; });
     $("letraAno").value = ""; $("desambiguacao").value = "";
     $("forma").value = "diretaCurta"; $("posicao").value = "parens";
@@ -1342,7 +1499,11 @@ document.addEventListener("click", (ev) => {
     $("notaAno").value = A(S.campos.ano);
     const l = locsTexto();
     $("notaPagina").value = l.length ? textoSimples(l[0]) : "";
-    $("notaTexto").value = textoSimples(montarReferencia());
+    $("notaTexto").value = textoSimples(montarReferencia() || montarNotaFonte());
+    if (semReferencia()) {
+      $("notaTipo").value = "explicativa";
+      if (A($("numNota").value)) $("notaNumero").value = A($("numNota").value);
+    }
     atualizarNota();
   }
 });
